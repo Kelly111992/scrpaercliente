@@ -22,6 +22,7 @@ export default function Home() {
   const [isScraping, setIsScraping] = useState(false);
   const [leads, setLeads] = useState<Lead[]>([]);
   const [status, setStatus] = useState("Idle");
+  const [mode, setMode] = useState<"maps" | "instagram">("maps");
   const [jobId, setJobId] = useState<string | null>(null);
   const eventSourceRef = useRef<EventSource | null>(null);
 
@@ -36,6 +37,7 @@ export default function Home() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           url,
+          mode,
           max_leads: maxLeads,
           delay_min_ms: delayMin,
           delay_max_ms: delayMax,
@@ -109,13 +111,30 @@ export default function Home() {
         </header>
 
         <section className="bg-slate-800 p-6 rounded-2xl shadow-xl border border-slate-700 mb-8">
+          <div className="flex gap-4 mb-6">
+            <button
+              onClick={() => { setMode("maps"); setUrl(""); }}
+              className={`flex-1 py-3 px-4 rounded-xl border-2 transition-all font-bold ${mode === "maps" ? "bg-blue-600/20 border-blue-500 text-blue-400" : "bg-slate-900 border-slate-700 text-slate-500 hover:border-slate-600"}`}
+            >
+              📍 Google Maps Mode
+            </button>
+            <button
+              onClick={() => { setMode("instagram"); setUrl(""); }}
+              className={`flex-1 py-3 px-4 rounded-xl border-2 transition-all font-bold ${mode === "instagram" ? "bg-indigo-600/20 border-indigo-500 text-indigo-400" : "bg-slate-900 border-slate-700 text-slate-500 hover:border-slate-600"}`}
+            >
+              📸 Instagram Search Mode
+            </button>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div className="space-y-2">
-              <label className="block text-sm font-medium text-slate-300">Google Maps Search URL</label>
+              <label className="block text-sm font-medium text-slate-300">
+                {mode === "maps" ? "Google Maps Search URL" : "Niche / Keywords (e.g. photographers nyc)"}
+              </label>
               <input
                 type="text"
                 className="w-full p-3 bg-slate-950 border border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all placeholder:text-slate-600"
-                placeholder="https://www.google.com/maps/search/dentist+near+mexico+city/..."
+                placeholder={mode === "maps" ? "https://www.google.com/maps/search/..." : "dentists in miami"}
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
               />

@@ -22,6 +22,7 @@ app.add_middleware(
 
 class ScrapeRequest(BaseModel):
     url: str
+    mode: str = "maps" # "maps" or "instagram"
     max_leads: int = 50
     delay_min_ms: int = 1000
     delay_max_ms: int = 3000
@@ -43,6 +44,7 @@ async def start_scrape(request: ScrapeRequest, background_tasks: BackgroundTasks
         scraper_instance.scrape,
         job_id,
         request.url,
+        request.mode,
         request.max_leads,
         request.delay_min_ms,
         request.delay_max_ms,

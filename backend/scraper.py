@@ -13,96 +13,166 @@ class GMapsScraper:
     def __init__(self):
         self.jobs = {}
 
-    async def scrape(self, job_id: str, url: str, max_leads: int, delay_min: int, delay_max: int, extract_website: bool, extract_phone: bool, status_callback):
+    async def scrape(self, job_id: str, url: str, mode: str, max_leads: int, delay_min: int, delay_max: int, extract_website: bool, extract_phone: bool, status_callback):
         self.jobs[job_id] = {"status": "running", "leads": [], "error": None}
         
         async with async_playwright() as p:
-            browser = await p.chromium.launch(headless=False) # Headless=False to see what's happening if needed, or True for production
+            browser = await p.chromium.launch(headless=True)
             context = await browser.new_context(
                 user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
             )
             page = await context.new_page()
             
             try:
-                await status_callback({"type": "status", "message": f"Navigating to {url}"})
-                # Increased timeout and more lenient wait condition
-                await page.goto(url, wait_until="domcontentloaded", timeout=60000)
-                await asyncio.sleep(5) # Wait a bit more for the elements to appear
-                
-                # Handle cookie consent if it appears
-                try:
-                    consent_btn = page.locator('button[aria-label*="Accept"], button[aria-label*="Aceptar"]')
-                    if await consent_btn.is_visible(timeout=5000):
-                        await consent_btn.click()
-                except:
-                    pass
-
-                leads_count = 0
-                processed_urls = set()
-
-                while leads_count < max_leads:
-                    # Find business links
-                    # Google Maps link selector for results
-                    links = await page.locator('a[href*="/maps/place/"]').all()
+                if mode == "instagram":
+                    # Construct search query for Instagram in Google
+                    search_query = f"site:instagram.com \"{url}\""
+                    google_url = f"https://www.google.com/search?q={search_query}"
                     
-                    if not links:
-                        await status_callback({"type": "info", "message": "No more results found or loading..."})
-                        # Try scrolling to load more
-                        await page.mouse.wheel(0, 5000)
-                        await asyncio.sleep(2)
+                    await status_callback({"type": "status", "message": f"Searching Google for Instagram profiles: {url}"})
+                    await page.goto(google_url, wait_until="domcontentloaded", timeout=60000)
+                    await asyncio.sleep(3)
+                    
+                    leads_count = 0
+                    while leads_count < max_leads:
+                        # Find all result blocks in Google
+                        results = await page.locator('div.g').all()
+                        
+                        if not results:
+                            await status_callback({"type": "info", "message": "No more results found or blocked by CAPTCHA."})
+                            break
+                            
+                        for result in results:
+                            if leads_count >= max_leads: break
+                            
+                            try:
+                                link_elem = result.locator('a').first
+                                title_elem = result.locator('h3').first
+                                snippet_elem = result.locator('div[style*="-webkit-line-clamp"]').first # Common Google snippet class
+                                
+                                href = await link_elem.get_attribute("href")
+                                if not href or "instagram.com" not in href or "/p/" in href or "/reels/" in href:
+                                    continue # Skip posts, reels and non-instagram links
+                                
+                                title = await title_elem.inner_text()
+                                snippet = ""
+                                try: snippet = await snippet_elem.inner_text()
+                                except: pass
+                                
+                                # Clean username from title or URL
+                                username = href.split("instagram.com/")[1].split("/")[0].replace("?hl=es", "").replace("/", "")
+                                
+                                lead = {
+                                    "name": title.split("•")[0].strip() if "•" in title else title,
+                                    "category": "Instagram Profile",
+                                    "address": "Instagram",
+                                    "phone": "",
+                                    "website": href,
+                                    "rating": "N/A",
+                                    "reviews_count": "0",
+                                    "google_maps_url": href,
+                                    "website_snippet": snippet,
+                                    "ai_analysis": f"¡Hola! Vi el perfil de {username} en Instagram y me encantó su contenido. Noté que podrían potenciar mucho más su marca con un sitio web automatizado que convierta seguidores en clientes las 24/7. En CLAVE.AI nos especializamos en esto. ¡Te invito a ver nuestro Instagram @claveai!"
+                                }
+                                
+                                self.jobs[job_id]["leads"].append(lead)
+                                leads_count += 1
+                                await status_callback({"type": "lead", "data": lead, "count": leads_count})
+                                await asyncio.sleep(random.randint(delay_min, delay_max) / 1000)
+                                
+                            except Exception as e:
+                                print(f"Error parsing Google result: {e}")
+                                continue
+                                
+                        # Check for "Next" page in Google
+                        next_btn = page.locator('a#pnnext')
+                        if await next_btn.is_visible():
+                            await next_btn.click()
+                            await asyncio.sleep(random.randint(2000, 4000) / 1000)
+                        else:
+                            break
+                            
+                else:
+                    # ORIGINAL GOOGLE MAPS FLOW
+                    await status_callback({"type": "status", "message": f"Navigating to Maps: {url}"})
+                    # Increased timeout and more lenient wait condition
+                    await page.goto(url, wait_until="domcontentloaded", timeout=60000)
+                    await asyncio.sleep(5) # Wait a bit more for the elements to appear
+                    
+                    # Handle cookie consent if it appears
+                    try:
+                        consent_btn = page.locator('button[aria-label*="Accept"], button[aria-label*="Aceptar"]')
+                        if await consent_btn.is_visible(timeout=5000):
+                            await consent_btn.click()
+                    except:
+                        pass
+
+                    leads_count = 0
+                    processed_urls = set()
+
+                    while leads_count < max_leads:
+                        # Find business links
+                        # Google Maps link selector for results
                         links = await page.locator('a[href*="/maps/place/"]').all()
+                        
                         if not links:
-                            break
+                            await status_callback({"type": "info", "message": "No more results found or loading..."})
+                            # Try scrolling to load more
+                            await page.mouse.wheel(0, 5000)
+                            await asyncio.sleep(2)
+                            links = await page.locator('a[href*="/maps/place/"]').all()
+                            if not links:
+                                break
 
-                    for link in links:
-                        if leads_count >= max_leads:
-                            break
+                        for link in links:
+                            if leads_count >= max_leads:
+                                break
+                            
+                            href = await link.get_attribute("href")
+                            if href in processed_urls:
+                                continue
+                                
+                            processed_urls.add(href)
+                            
+                            try:
+                                # Click to open details
+                                await link.click()
+                                await asyncio.sleep(random.randint(delay_min, delay_max) / 1000)
+                                
+                                # Extract data from the detail panel
+                                lead = await self.extract_details(page, href)
+                                lead['google_maps_url'] = href
+                                
+                                # New: Local Speech Template (AI disabled for stability)
+                                if not lead["website_snippet"] or lead["website_snippet"] == "Could not load website.":
+                                    lead["ai_analysis"] = f"¡Hola! Estuve viendo el perfil de {lead['name']} y me encantó lo que hacen. Noté que aún no cuentan con un sitio web oficial..."
+                                else:
+                                    lead["ai_analysis"] = "Este negocio ya cuenta con sitio web. Concentrándonos en prospección de nuevos sitios..."
+
+                                # AI Analysis call disabled as per user request
+                                # await asyncio.sleep(2)
+                                # await status_callback({"type": "status", "message": f"Analyzing {lead['name']} with AI..."})
+                                # lead["ai_analysis"] = await ai_analyzer.analyze_business(
+                                #     lead["name"], lead["category"], lead["website_snippet"]
+                                # )
+
+                                self.jobs[job_id]["leads"].append(lead)
+                                leads_count += 1
+                                
+                                await status_callback({"type": "lead", "data": lead, "count": leads_count})
+                                
+                            except Exception as e:
+                                print(f"Error extracting lead: {e}")
+                                continue
+
+                        # Scroll to load more
+                        await page.mouse.wheel(0, 3000)
+                        await asyncio.sleep(2)
                         
-                        href = await link.get_attribute("href")
-                        if href in processed_urls:
-                            continue
-                            
-                        processed_urls.add(href)
-                        
-                        try:
-                            # Click to open details
-                            await link.click()
-                            await asyncio.sleep(random.randint(delay_min, delay_max) / 1000)
-                            
-                            # Extract data from the detail panel
-                            lead = await self.extract_details(page, href)
-                            lead['google_maps_url'] = href
-                            
-                            # New: Local Speech Template (AI disabled for stability)
-                            if not lead["website_snippet"] or lead["website_snippet"] == "Could not load website.":
-                                lead["ai_analysis"] = f"¡Hola! Estuve viendo el perfil de {lead['name']} y me encantó lo que hacen. Noté que aún no cuentan con un sitio web oficial; hoy en día no tener presencia digital es casi ser invisible. En CLAVE.AI nos especializamos en transformar negocios con sitios web inteligentes y automatización con IA para que vendas incluso mientras descansas. Te invito a ver nuestro trabajo en https://www.instagram.com/claveai y si te interesa potenciar {lead['name']}, ¡aquí estoy para ayudarte!"
-                            else:
-                                lead["ai_analysis"] = "Este negocio ya cuenta con sitio web. Concentrándonos en prospección de nuevos sitios..."
-
-                            # AI Analysis call disabled as per user request
-                            # await asyncio.sleep(2)
-                            # await status_callback({"type": "status", "message": f"Analyzing {lead['name']} with AI..."})
-                            # lead["ai_analysis"] = await ai_analyzer.analyze_business(
-                            #     lead["name"], lead["category"], lead["website_snippet"]
-                            # )
-
-                            self.jobs[job_id]["leads"].append(lead)
-                            leads_count += 1
-                            
-                            await status_callback({"type": "lead", "data": lead, "count": leads_count})
-                            
-                        except Exception as e:
-                            print(f"Error extracting lead: {e}")
-                            continue
-
-                    # Scroll to load more
-                    await page.mouse.wheel(0, 3000)
-                    await asyncio.sleep(2)
-                    
-                    # Check if we reached the end
-                    end_text = await page.locator('text="You\'ve reached the end of the list"').is_visible()
-                    if end_text:
-                        break
+                        # Check if we reached the end
+                        end_text = await page.locator('text="You\'ve reached the end of the list"').is_visible()
+                        if end_text:
+                            break
 
                 self.jobs[job_id]["status"] = "done"
                 await status_callback({"type": "done", "job_id": job_id})
