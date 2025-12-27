@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+playwright
+pandas
+python-multipart
+sse-starlette
+openai
+python-dotenv
+httpx
