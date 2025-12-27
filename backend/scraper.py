@@ -24,39 +24,53 @@ class GMapsScraper:
             page = await context.new_page()
             
             try:
+                print(f"DEBUG: Starting scrape in mode: {mode} for query: {url}")
                 if mode == "instagram":
                     # Construct search query for Instagram in Google
-                    search_query = f"site:instagram.com \"{url}\""
+                    import urllib.parse
+                    # Removing the strict quotes to allow more results
+                    search_query = urllib.parse.quote(f"site:instagram.com {url}")
                     google_url = f"https://www.google.com/search?q={search_query}"
                     
                     await status_callback({"type": "status", "message": f"Searching Google for Instagram profiles: {url}"})
                     await page.goto(google_url, wait_until="domcontentloaded", timeout=60000)
-                    await asyncio.sleep(3)
+                    await asyncio.sleep(4)
                     
                     leads_count = 0
                     while leads_count < max_leads:
-                        # Find all result blocks in Google
-                        results = await page.locator('div.g').all()
+                        # Find all result blocks in Google - try multiple possible selectors
+                        results = await page.locator('div.g, div.SearchCard, div[data-hveid]').all()
+                        print(f"DEBUG: Found {len(results)} potential Google result blocks")
                         
                         if not results:
-                            await status_callback({"type": "info", "message": "No more results found or blocked by CAPTCHA."})
+                            # Check if we are being blocked
+                            page_content = await page.content()
+                            if "captcha" in page_content.lower() or "not a robot" in page_content.lower():
+                                await status_callback({"type": "error", "message": "Blocked by Google CAPTCHA. Try again in a few minutes or use a different network."})
+                            else:
+                                await status_callback({"type": "info", "message": "No more results found."})
                             break
                             
                         for result in results:
                             if leads_count >= max_leads: break
                             
                             try:
-                                link_elem = result.locator('a').first
-                                title_elem = result.locator('h3').first
-                                snippet_elem = result.locator('div[style*="-webkit-line-clamp"]').first # Common Google snippet class
-                                
+                                link_elem = result.locator('a[href*="instagram.com"]').first
+                                if not await link_elem.is_visible():
+                                    continue
+                                    
                                 href = await link_elem.get_attribute("href")
-                                if not href or "instagram.com" not in href or "/p/" in href or "/reels/" in href:
-                                    continue # Skip posts, reels and non-instagram links
+                                if not href or "/p/" in href or "/reels/" in href or "/explore/" in href:
+                                    continue 
                                 
-                                title = await title_elem.inner_text()
+                                title_elem = result.locator('h3').first
+                                title = await title_elem.inner_text() if await title_elem.is_visible() else "Instagram User"
+                                
                                 snippet = ""
-                                try: snippet = await snippet_elem.inner_text()
+                                try:
+                                    # Try to find the snippet text
+                                    snippet_elem = result.locator('div[style*="-webkit-line-clamp"], .VwiC3b').first
+                                    snippet = await snippet_elem.inner_text()
                                 except: pass
                                 
                                 # Clean username from title or URL

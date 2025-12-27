@@ -274,7 +274,11 @@ export default function Home() {
                     <td colSpan={5} className="p-12 text-center text-slate-500">
                       <div className="flex flex-col items-center gap-2">
                         <span className="text-4xl text-slate-600">🔍</span>
-                        <p>No leads extracted yet. Paste a Google Maps URL above to start.</p>
+                        <p>
+                          {mode === "maps"
+                            ? "No leads extracted yet. Paste a Google Maps URL above to start."
+                            : "No Instagram profiles found yet. Enter keywords above to start."}
+                        </p>
                       </div>
                     </td>
                   </tr>
