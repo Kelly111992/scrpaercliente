@@ -31,7 +31,7 @@ export default function Home() {
     setStatus("Starting...");
 
     try {
-      const response = await fetch("http://localhost:8000/scrape/start", {
+      const response = await fetch("http://localhost:8001/scrape/start", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -55,7 +55,7 @@ export default function Home() {
   const connectSSE = (id: string) => {
     if (eventSourceRef.current) eventSourceRef.current.close();
 
-    const es = new EventSource(`http://localhost:8000/scrape/stream/${id}`);
+    const es = new EventSource(`http://localhost:8001/scrape/stream/${id}`);
     eventSourceRef.current = es;
 
     es.onmessage = (event) => {
@@ -84,7 +84,7 @@ export default function Home() {
 
   const downloadCSV = () => {
     if (jobId) {
-      window.open(`http://localhost:8000/scrape/result/${jobId}.csv`);
+      window.open(`http://localhost:8001/scrape/result/${jobId}.csv`);
     }
   };
 
