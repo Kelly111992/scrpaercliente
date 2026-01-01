@@ -37,9 +37,7 @@ jobs:
       - name: Run Daily Scraper
         env:
           N8N_WEBHOOK_URL: ${{ secrets.N8N_WEBHOOK_URL }}
-          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           MAX_LEADS: '3'
-          DELAY_MIN_MS: '2000'
           DELAY_MAX_MS: '5000'
         run: |
           cd backend
