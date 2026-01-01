@@ -51,39 +51,47 @@ class AutomatedScraper:
         self.delay_max = int(os.getenv("DELAY_MAX_MS", "5000"))
         self.leads = []
         
-    async def send_to_n8n(self, lead):
-        """Send lead to n8n webhook for WhatsApp delivery"""
+    def clean_lead(self, lead):
+        """Clean a lead's data from whitespace and newlines"""
+        raw_phone = lead.get("phone", "")
+        clean_phone = "".join(filter(str.isdigit, raw_phone.replace("\n", "").replace("\r", "")))
+        
+        return {
+            "phone": clean_phone,
+            "message": " ".join(lead.get("ai_analysis", "").split()),
+            "lead_name": " ".join(lead.get("name", "").split()),
+            "category": " ".join(lead.get("category", "").split()),
+            "website": lead.get("website", "").strip(),
+            "google_maps_url": lead.get("google_maps_url", "").strip()
+        }
+        
+    async def send_all_to_n8n(self, leads_list):
+        """Send ALL leads to n8n webhook in a single call"""
         if not self.n8n_webhook_url:
             print(f"[WARN] No N8N_WEBHOOK_URL configured")
             return False
         
-        # Clean phone: remove all non-digits including newlines
-        raw_phone = lead.get("phone", "")
-        clean_phone = "".join(filter(str.isdigit, raw_phone.replace("\n", "").replace("\r", "")))
+        # Filter leads with phone and clean them
+        cleaned_leads = []
+        for lead in leads_list:
+            cleaned = self.clean_lead(lead)
+            if cleaned["phone"]:  # Only include leads with phone
+                cleaned_leads.append(cleaned)
         
-        if not clean_phone:
-            print(f"[SKIP] No phone for {lead.get('name', 'Unknown')}")
+        if not cleaned_leads:
+            print(f"[WARN] No leads with phone numbers to send")
             return False
         
         try:
-            # Clean message: normalize whitespace
-            clean_message = " ".join(lead.get("ai_analysis", "").split())
-            clean_name = " ".join(lead.get("name", "").split())
-            clean_category = " ".join(lead.get("category", "").split())
-            clean_website = lead.get("website", "").strip()
-            
             async with httpx.AsyncClient() as client:
                 payload = {
-                    "phone": clean_phone,
-                    "message": clean_message,
-                    "lead_name": clean_name,
-                    "category": clean_category,
-                    "website": clean_website,
+                    "leads": cleaned_leads,
+                    "total_count": len(cleaned_leads),
                     "source": "automated_scraper",
                     "timestamp": datetime.now().isoformat()
                 }
-                response = await client.post(self.n8n_webhook_url, json=payload, timeout=15.0)
-                print(f"[N8N] Sent {clean_name} -> {clean_phone} | Status: {response.status_code}")
+                response = await client.post(self.n8n_webhook_url, json=payload, timeout=30.0)
+                print(f"[N8N] Sent {len(cleaned_leads)} leads in ONE call | Status: {response.status_code}")
                 return response.status_code == 200
         except Exception as e:
             print(f"[ERROR] Failed to send to n8n: {e}")
@@ -217,12 +225,6 @@ class AutomatedScraper:
                             leads_count += 1
                             
                             print(f"[LEAD {leads_count}] {lead['name']} | Phone: {lead['phone'] or 'N/A'}")
-                            
-                            # Send to n8n immediately
-                            if lead.get("phone"):
-                                success = await self.send_to_n8n(lead)
-                                if success:
-                                    sent_count += 1
                                     
                         except Exception as e:
                             print(f"[ERROR] Extracting lead: {e}")
@@ -239,8 +241,13 @@ class AutomatedScraper:
                     except:
                         pass
 
+                # Send ALL leads to n8n in ONE call at the end
+                if self.leads:
+                    success = await self.send_all_to_n8n(self.leads)
+                    sent_count = len([l for l in self.leads if l.get("phone")]) if success else 0
+
                 print(f"\n{'='*60}")
-                print(f"[DONE] Extracted: {leads_count} leads | Sent to WhatsApp: {sent_count}")
+                print(f"[DONE] Extracted: {leads_count} leads | Sent to n8n: {sent_count} (in 1 call)")
                 print(f"{'='*60}\n")
                 
             except Exception as e:
