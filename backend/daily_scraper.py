@@ -54,26 +54,34 @@ class AutomatedScraper:
         if not self.n8n_webhook_url:
             print(f"[WARN] No N8N_WEBHOOK_URL configured")
             return False
-            
-        if not lead.get("phone"):
+        
+        # Clean phone: remove all non-digits including newlines
+        raw_phone = lead.get("phone", "")
+        clean_phone = "".join(filter(str.isdigit, raw_phone.replace("\n", "").replace("\r", "")))
+        
+        if not clean_phone:
             print(f"[SKIP] No phone for {lead.get('name', 'Unknown')}")
             return False
         
         try:
-            clean_phone = "".join(filter(str.isdigit, lead["phone"]))
+            # Clean message: normalize whitespace
+            clean_message = " ".join(lead.get("ai_analysis", "").split())
+            clean_name = " ".join(lead.get("name", "").split())
+            clean_category = " ".join(lead.get("category", "").split())
+            clean_website = lead.get("website", "").strip()
             
             async with httpx.AsyncClient() as client:
                 payload = {
                     "phone": clean_phone,
-                    "message": lead["ai_analysis"],
-                    "lead_name": lead["name"],
-                    "category": lead["category"],
-                    "website": lead.get("website", ""),
+                    "message": clean_message,
+                    "lead_name": clean_name,
+                    "category": clean_category,
+                    "website": clean_website,
                     "source": "automated_scraper",
                     "timestamp": datetime.now().isoformat()
                 }
                 response = await client.post(self.n8n_webhook_url, json=payload, timeout=15.0)
-                print(f"[N8N] Sent {lead['name']} -> {clean_phone} | Status: {response.status_code}")
+                print(f"[N8N] Sent {clean_name} -> {clean_phone} | Status: {response.status_code}")
                 return response.status_code == 200
         except Exception as e:
             print(f"[ERROR] Failed to send to n8n: {e}")
