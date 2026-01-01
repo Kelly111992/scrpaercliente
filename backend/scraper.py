@@ -8,54 +8,112 @@ from sse_starlette.sse import EventSourceResponse
 from typing import Dict, List, Optional
 import json
 import os
+import httpx
+from dotenv import load_dotenv
+
+load_dotenv()
 
 class GMapsScraper:
     def __init__(self):
         self.jobs = {}
+        self.n8n_webhook_url = os.getenv("N8N_WEBHOOK_URL")
 
-    async def scrape(self, job_id: str, url: str, mode: str, max_leads: int, delay_min: int, delay_max: int, extract_website: bool, extract_phone: bool, status_callback):
+    async def send_to_n8n(self, lead):
+        print(f"[DEBUG] send_to_n8n called. Webhook URL: {self.n8n_webhook_url}")
+        print(f"[DEBUG] Lead phone: '{lead.get('phone')}'")
+        
+        if not self.n8n_webhook_url:
+            print("[DEBUG] No webhook URL configured, skipping")
+            return
+        
+        if not lead.get("phone"):
+            print("[DEBUG] No phone number in lead, skipping")
+            return
+        
+        try:
+            # Clean phone number (Evolution API expects digits, usually with country code)
+            clean_phone = "".join(filter(str.isdigit, lead["phone"]))
+            
+            async with httpx.AsyncClient() as client:
+                payload = {
+                    "phone": clean_phone,
+                    "message": lead["ai_analysis"],
+                    "lead_name": lead["name"],
+                    "category": lead["category"],
+                    "website": lead["website"]
+                }
+                response = await client.post(self.n8n_webhook_url, json=payload, timeout=10.0)
+                print(f"n8n Webhook response: {response.status_code}")
+        except Exception as e:
+            print(f"Error sending to n8n: {e}")
+
+    async def scrape(self, job_id: str, url: str, mode: str, max_leads: int, delay_min: int, delay_max: int, extract_website: bool, extract_phone: bool, status_callback, auto_send_n8n: bool = False):
         self.jobs[job_id] = {"status": "running", "leads": [], "error": None}
         
         async with async_playwright() as p:
-            browser = await p.chromium.launch(headless=True)
+            # Set headless=False so the user can see if Google blocks with CAPTCHA
+            browser = await p.chromium.launch(headless=False)
             context = await browser.new_context(
                 user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
             )
             page = await context.new_page()
             
             try:
-                print(f"DEBUG: Starting scrape in mode: {mode} for query: {url}")
+                print(f"\n--- Starting Scrape Job: {job_id} ---")
+                print(f"Mode: {mode}")
+                print(f"Query: {url}")
+                
                 if mode == "instagram":
-                    # Construct search query for Instagram in Google
                     import urllib.parse
-                    # Removing the strict quotes to allow more results
+                    # Broad search for better results
                     search_query = urllib.parse.quote(f"site:instagram.com {url}")
                     google_url = f"https://www.google.com/search?q={search_query}"
                     
                     await status_callback({"type": "status", "message": f"Searching Google for Instagram profiles: {url}"})
                     await page.goto(google_url, wait_until="domcontentloaded", timeout=60000)
-                    await asyncio.sleep(4)
                     
                     leads_count = 0
                     while leads_count < max_leads:
-                        # Find all result blocks in Google - try multiple possible selectors
-                        results = await page.locator('div.g, div.SearchCard, div[data-hveid]').all()
-                        print(f"DEBUG: Found {len(results)} potential Google result blocks")
+                        # More robust result selectors for various Google layouts
+                        result_selector = 'div.g, div.tF2Cxc, div.MjjYud, div.sr_item, div.SearchCard'
+                        results = await page.locator(result_selector).all()
                         
                         if not results:
-                            # Check if we are being blocked
+                            # Use a very broad search for any Instagram links to see if they exist
+                            links = await page.locator('a[href*="instagram.com"]').all()
+                            if links:
+                                results = links # Treat direct links as results if containers aren't found
+                        
+                        if not results:
                             page_content = await page.content()
-                            if "captcha" in page_content.lower() or "not a robot" in page_content.lower():
-                                await status_callback({"type": "error", "message": "Blocked by Google CAPTCHA. Try again in a few minutes or use a different network."})
+                            # Check for actual blocking elements, not just text in the page
+                            is_captcha = await page.locator('iframe[src*="recaptcha"], #captcha-form, #recaptcha').count() > 0
+                            
+                            if is_captcha or "detecting unusual traffic" in page_content.lower():
+                                await status_callback({"type": "status", "message": "⚠️ CAPTCHA detected! Please solve it in the browser window now..."})
+                                try:
+                                    # Wait for any of the result selectors to appear
+                                    await page.wait_for_selector(result_selector, timeout=300000)
+                                    await status_callback({"type": "status", "message": "CAPTCHA solved! Resuming search..."})
+                                    results = await page.locator(result_selector).all()
+                                except:
+                                    await status_callback({"type": "error", "message": "Timeout: CAPTCHA was not solved in time."})
+                                    return
                             else:
-                                await status_callback({"type": "info", "message": "No more results found."})
-                            break
+                                break
+                            
+                        if not results: break 
                             
                         for result in results:
                             if leads_count >= max_leads: break
                             
                             try:
-                                link_elem = result.locator('a[href*="instagram.com"]').first
+                                # If it's a div.g, find the link inside
+                                if await result.evaluate("node => node.tagName") == "DIV":
+                                    link_elem = result.locator('a[href*="instagram.com"]').first
+                                else:
+                                    link_elem = result # It's already the link element
+
                                 if not await link_elem.is_visible():
                                     continue
                                     
@@ -63,18 +121,19 @@ class GMapsScraper:
                                 if not href or "/p/" in href or "/reels/" in href or "/explore/" in href:
                                     continue 
                                 
-                                title_elem = result.locator('h3').first
-                                title = await title_elem.inner_text() if await title_elem.is_visible() else "Instagram User"
-                                
-                                snippet = ""
+                                # Try to get title
                                 try:
-                                    # Try to find the snippet text
-                                    snippet_elem = result.locator('div[style*="-webkit-line-clamp"], .VwiC3b').first
-                                    snippet = await snippet_elem.inner_text()
-                                except: pass
+                                    title = await result.locator('h3').inner_text()
+                                except:
+                                    title = await link_elem.inner_text()
                                 
-                                # Clean username from title or URL
-                                username = href.split("instagram.com/")[1].split("/")[0].replace("?hl=es", "").replace("/", "")
+                                # Clean username
+                                try:
+                                    username = href.split("instagram.com/")[1].split("/")[0].split("?")[0]
+                                except:
+                                    username = "User"
+
+                                print(f"MATCH: Found profile @{username}")
                                 
                                 lead = {
                                     "name": title.split("•")[0].strip() if "•" in title else title,
@@ -85,24 +144,27 @@ class GMapsScraper:
                                     "rating": "N/A",
                                     "reviews_count": "0",
                                     "google_maps_url": href,
-                                    "website_snippet": snippet,
-                                    "ai_analysis": f"¡Hola! Vi el perfil de {username} en Instagram y me encantó su contenido. Noté que podrían potenciar mucho más su marca con un sitio web automatizado que convierta seguidores en clientes las 24/7. En CLAVE.AI nos especializamos en esto. ¡Te invito a ver nuestro Instagram @claveai!"
+                                    "website_snippet": f"Instagram Profile: @{username}",
+                                    "ai_analysis": f"¡Hola! Vi el perfil de {username} en Instagram y me encantó su contenido. Noté que podrían potenciar mucho más su marca con un sitio web automatizado que convierta seguidores en clientes las 24/7.\n\nEn CLAVE.AI nos especializamos en esto. ¡Te invito a conocer nuestros servicios en https://claveai.lat y ver nuestro trabajo en https://www.instagram.com/claveai/!"
                                 }
                                 
                                 self.jobs[job_id]["leads"].append(lead)
                                 leads_count += 1
                                 await status_callback({"type": "lead", "data": lead, "count": leads_count})
+                                
+                                if auto_send_n8n and lead.get("phone"):
+                                    await self.send_to_n8n(lead)
+                                    
                                 await asyncio.sleep(random.randint(delay_min, delay_max) / 1000)
                                 
                             except Exception as e:
-                                print(f"Error parsing Google result: {e}")
                                 continue
                                 
-                        # Check for "Next" page in Google
+                        # Check for "Next" page
                         next_btn = page.locator('a#pnnext')
                         if await next_btn.is_visible():
                             await next_btn.click()
-                            await asyncio.sleep(random.randint(2000, 4000) / 1000)
+                            await asyncio.sleep(2)
                         else:
                             break
                             
@@ -157,23 +219,30 @@ class GMapsScraper:
                                 lead = await self.extract_details(page, href)
                                 lead['google_maps_url'] = href
                                 
-                                # New: Local Speech Template (AI disabled for stability)
+                                # Improved Speech Template
                                 if not lead["website_snippet"] or lead["website_snippet"] == "Could not load website.":
-                                    lead["ai_analysis"] = f"¡Hola! Estuve viendo el perfil de {lead['name']} y me encantó lo que hacen. Noté que aún no cuentan con un sitio web oficial..."
+                                    lead["ai_analysis"] = f"¡Hola! Estuve viendo el perfil de {lead['name']} y me encantó el trabajo que realizan. Noté que aún no cuentan con un sitio web oficial, y hoy en día eso es clave para convertir seguidores en clientes.\n\nEn CLAVE.AI ayudamos a negocios a automatizar su crecimiento. Te invito a conocer nuestros servicios en https://claveai.lat y ver nuestro trabajo en https://www.instagram.com/claveai/."
                                 else:
-                                    lead["ai_analysis"] = "Este negocio ya cuenta con sitio web. Concentrándonos en prospección de nuevos sitios..."
+                                    lead["ai_analysis"] = f"¡Hola! Vi la web de {lead['name']} y me pareció excelente. Sin embargo, noté algunas oportunidades para optimizar la conversión con IA.\n\nEn CLAVE.AI nos especializamos en potenciar negocios digitales. Puedes ver lo que hacemos en https://claveai.lat y seguirnos en https://www.instagram.com/claveai/."
 
-                                # AI Analysis call disabled as per user request
-                                # await asyncio.sleep(2)
-                                # await status_callback({"type": "status", "message": f"Analyzing {lead['name']} with AI..."})
-                                # lead["ai_analysis"] = await ai_analyzer.analyze_business(
-                                #     lead["name"], lead["category"], lead["website_snippet"]
-                                # )
+                                # AI Analysis call (Re-enabling for better personalization)
+                                await asyncio.sleep(1)
+                                try:
+                                    analysis = await ai_analyzer.analyze_business(
+                                        lead["name"], lead["category"], lead["website_snippet"]
+                                    )
+                                    if "Error" not in analysis:
+                                        lead["ai_analysis"] = analysis
+                                except:
+                                    pass # Fallback to hardcoded template if AI fails
 
                                 self.jobs[job_id]["leads"].append(lead)
                                 leads_count += 1
                                 
                                 await status_callback({"type": "lead", "data": lead, "count": leads_count})
+                                
+                                if auto_send_n8n and lead.get("phone"):
+                                    await self.send_to_n8n(lead)
                                 
                             except Exception as e:
                                 print(f"Error extracting lead: {e}")

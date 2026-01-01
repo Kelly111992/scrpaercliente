@@ -28,6 +28,7 @@ class ScrapeRequest(BaseModel):
     delay_max_ms: int = 3000
     extract_website: bool = True
     extract_phone: bool = True
+    auto_send_n8n: bool = False
 
 # Store progress events for SSE
 job_events = {}
@@ -50,7 +51,8 @@ async def start_scrape(request: ScrapeRequest, background_tasks: BackgroundTasks
         request.delay_max_ms,
         request.extract_website,
         request.extract_phone,
-        status_callback
+        status_callback,
+        request.auto_send_n8n
     )
     
     return {"job_id": job_id}

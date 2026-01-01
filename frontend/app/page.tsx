@@ -23,6 +23,7 @@ export default function Home() {
   const [leads, setLeads] = useState<Lead[]>([]);
   const [status, setStatus] = useState("Idle");
   const [mode, setMode] = useState<"maps" | "instagram">("maps");
+  const [autoSendN8n, setAutoSendN8n] = useState(false);
   const [jobId, setJobId] = useState<string | null>(null);
   const eventSourceRef = useRef<EventSource | null>(null);
 
@@ -41,6 +42,7 @@ export default function Home() {
           max_leads: maxLeads,
           delay_min_ms: delayMin,
           delay_max_ms: delayMax,
+          auto_send_n8n: autoSendN8n,
         }),
       });
 
@@ -168,6 +170,18 @@ export default function Home() {
                 />
               </div>
             </div>
+            <div className="flex items-center space-x-3 bg-slate-950/50 p-4 rounded-xl border border-slate-700">
+              <input
+                type="checkbox"
+                id="autoSend"
+                className="w-5 h-5 accent-emerald-500 cursor-pointer"
+                checked={autoSendN8n}
+                onChange={(e) => setAutoSendN8n(e.target.checked)}
+              />
+              <label htmlFor="autoSend" className="text-sm font-medium text-slate-300 cursor-pointer">
+                🚀 Auto-enviar a WhatsApp (n8n + Evolution API)
+              </label>
+            </div>
           </div>
 
           <div className="flex flex-wrap items-center justify-between gap-4">
@@ -264,7 +278,16 @@ export default function Home() {
                     </td>
                     <td className="p-4 text-xs">
                       <div className="bg-slate-900/50 p-3 rounded border border-slate-700 text-slate-300 leading-relaxed whitespace-pre-wrap">
-                        {lead.ai_analysis}
+                        {lead.ai_analysis.split(/(\s+)/).map((part, i) => {
+                          if (part.startsWith('http')) {
+                            return (
+                              <a key={i} href={part} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">
+                                {part}
+                              </a>
+                            );
+                          }
+                          return part;
+                        })}
                       </div>
                     </td>
                   </tr>

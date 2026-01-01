@@ -25,37 +25,36 @@ class AIAnalyzer:
             El negocio "{business_name}" ({category}) NO tiene sitio web o presencia digital clara.
             
             TAREA:
-            1. DEFICIT: Falta de presencia digital y automatización.
-            2. MENSAJE SUTIL (Speech Potente): Escribe un mensaje corto y muy potente para WhatsApp.
-               - Empieza con un cumplido sincero sobre su negocio.
-               - Menciona de forma inspiradora cómo hoy en día no tener web es como ser invisible para nuevos clientes.
-               - Introduce cómo la Inteligencia Artificial y la automatización podrían simplificarles la vida y atraer ventas en automático.
-               - Cierra invitándoles a ver lo que haces en CLAVE.AI: https://www.instagram.com/claveai
-            3. SERVICIO RECOMENDADO: Pack "Transformación Digital + IA".
+            1. DEFICIT: Falta de presencia digital clara o web obsoleta.
+            2. MENSAJE PERSUASIVO (WhatsApp): Escribe un mensaje corto y potente para contactar al dueño.
+               - Inicia con un cumplido genuino sobre su negocio "{business_name}".
+               - IMPORTANTE: NO incluyas links de Google Maps ni links externos del propio cliente en el mensaje.
+               - Menciona de forma empática cómo la falta de una plataforma web profesional les hace perder oportunidades frente a la competencia.
+               - Explica brevemente cómo la Inteligencia Artificial y la automatización en CLAVE.AI pueden ayudarlos a captar clientes 24/7.
+               - Cierra con un CTA (Llamado a la acción) incluyendo únicamente los links de CLAVE.AI: Web: https://claveai.lat e Instagram: https://www.instagram.com/claveai/
+            3. SERVICIO RECOMENDADO: Menciona el servicio más apto de CLAVE.AI.
             
-            Tono: Inspirador, no regañón. Máximo 80 palabras.
+            Tono: Profesional, visionario y cercano. Máximo 100 palabras.
             """
         else:
             prompt = f"""
-            Actúa como un Especialista en Relaciones B2B para la agencia "CLAVE.AI" (https://www.instagram.com/claveai).
-            Tu objetivo es analizar el siguiente negocio y sugerir una mejora sutil.
+            Actúa como Especialista en Estrategia Digital de CLAVE.AI. Analiza el negocio "{business_name}" ({category}).
             
             DATOS DEL PROSPECTO:
-            NEGOCIO: {business_name}
-            CATEGORÍA: {category}
             CONTENIDO WEB (Resumen): {website_text[:2000]}
             
-            TU IDENTIDAD: Representas a CLAVE.AI. Eres profesional, experto en IA y desarrollo web, pero muy cercano.
+            TU OBJETIVO: Generar una propuesta de contacto irresistible via WhatsApp.
             
             TAREA:
-            1. DEFICIT (Breve): Identifica el problema principal de su presencia web.
-            2. MENSAJE SUTIL (WhatsApp/Email): Escribe una propuesta de contacto.
-               - Valida algo positivo de ellos.
-               - Menciona el déficit como una observación para mejorar su experiencia de cliente.
-               - Al final, menciona suavemente que vienes de CLAVE.AI y que pueden ver tu trabajo en https://www.instagram.com/claveai.
-            3. SERVICIO RECOMENDADO: Qué servicio de CLAVE.AI les ayudaría.
+            1. ANÁLISIS (Breve): Qué le falta a su web actual para convertir más.
+            2. MENSAJE DE CONTACTO (WhatsApp):
+               - Valida su presencia actual (ej: "Me gustó mucho su sección de...").
+               - IMPORTANTE: NO incluyas links de Google Maps ni links externos del propio cliente.
+               - Sugiere una mejora específica basada en IA o automatización que solo CLAVE.AI ofrece.
+               - Al final, invita a conocer más en nuestra web https://claveai.lat y ver nuestro Instagram https://www.instagram.com/claveai/ para darles confianza.
+            3. SERVICIO RECOMENDADO: Qué solución de CLAVE.AI les encaja mejor.
             
-            REGLA DE ORO: Tono amigable y no invasivo. El enlace a Instagram sirve para darles seguridad de que eres una agencia real.
+            REGLA DE ORO: Evita sonar como un script de ventas aburrido. Sé humano, experto y directo al valor.
             """
 
         payload = {

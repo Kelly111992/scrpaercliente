@@ -1,0 +1,50 @@
+name: Daily Lead Scraper
+
+on:
+  schedule:
+    # Runs at 10:00 AM Mexico City time (UTC-6) every day
+    # 10:00 CST = 16:00 UTC
+    - cron: '0 16 * * *'
+  
+  # Allow manual trigger
+  workflow_dispatch:
+    inputs:
+      day_override:
+        description: 'Day of week to run (0=Monday, 6=Sunday)'
+        required: false
+        default: ''
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          cd backend
+          pip install playwright httpx python-dotenv openai pandas
+          playwright install chromium
+          playwright install-deps
+
+      - name: Run Daily Scraper
+        env:
+          N8N_WEBHOOK_URL: ${{ secrets.N8N_WEBHOOK_URL }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          MAX_LEADS: '3'
+          DELAY_MIN_MS: '2000'
+          DELAY_MAX_MS: '5000'
+        run: |
+          cd backend
+          if [ -n "${{ github.event.inputs.day_override }}" ]; then
+            python daily_scraper.py ${{ github.event.inputs.day_override }}
+          else
+            python daily_scraper.py
+          fi
