@@ -43,7 +43,9 @@ except ImportError:
 
 class AutomatedScraper:
     def __init__(self):
-        self.n8n_webhook_url = os.getenv("N8N_WEBHOOK_URL")
+        # Clean webhook URL from any whitespace/newlines
+        raw_url = os.getenv("N8N_WEBHOOK_URL", "")
+        self.n8n_webhook_url = raw_url.strip().replace("\n", "").replace("\r", "") if raw_url else None
         self.max_leads = int(os.getenv("MAX_LEADS", "10"))
         self.delay_min = int(os.getenv("DELAY_MIN_MS", "2000"))
         self.delay_max = int(os.getenv("DELAY_MAX_MS", "5000"))
