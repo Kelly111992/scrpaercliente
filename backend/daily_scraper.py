@@ -56,6 +56,10 @@ class AutomatedScraper:
         raw_phone = lead.get("phone", "")
         clean_phone = "".join(filter(str.isdigit, raw_phone.replace("\n", "").replace("\r", "")))
         
+        # Add Mexico country code (52) if phone is 10 digits (local format)
+        if len(clean_phone) == 10 and not clean_phone.startswith("52"):
+            clean_phone = "52" + clean_phone
+        
         return {
             "phone": clean_phone,
             "message": " ".join(lead.get("ai_analysis", "").split()),
