@@ -90,11 +90,23 @@ class AutomatedScraper:
                     "source": "automated_scraper",
                     "timestamp": datetime.now().isoformat()
                 }
-                response = await client.post(self.n8n_webhook_url, json=payload, timeout=30.0)
-                print(f"[N8N] Sent {len(cleaned_leads)} leads in ONE call | Status: {response.status_code}")
-                return response.status_code == 200
+                
+                # Retry logic with exponential backoff
+                max_retries = 3
+                for attempt in range(max_retries):
+                    try:
+                        response = await client.post(self.n8n_webhook_url, json=payload, timeout=60.0)
+                        print(f"[N8N] Sent {len(cleaned_leads)} leads in ONE call | Status: {response.status_code}")
+                        return response.status_code == 200
+                    except httpx.TimeoutException as timeout_err:
+                        if attempt < max_retries - 1:
+                            wait_time = (attempt + 1) * 10  # 10s, 20s, 30s
+                            print(f"[RETRY] Timeout on attempt {attempt + 1}/{max_retries}, waiting {wait_time}s...")
+                            await asyncio.sleep(wait_time)
+                        else:
+                            raise timeout_err
         except Exception as e:
-            print(f"[ERROR] Failed to send to n8n: {e}")
+            print(f"[ERROR] Failed to send to n8n: {type(e).__name__}: {e}")
             return False
 
     async def get_text(self, page, selector) -> str:
