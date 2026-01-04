@@ -54,11 +54,22 @@ class AutomatedScraper:
     def clean_lead(self, lead):
         """Clean a lead's data from whitespace and newlines"""
         raw_phone = lead.get("phone", "")
-        clean_phone = "".join(filter(str.isdigit, raw_phone.replace("\n", "").replace("\r", "")))
+        # Remove all non-digit characters (including +, spaces, dashes, etc.)
+        clean_phone = "".join(filter(str.isdigit, raw_phone))
         
-        # Add Mexico country code (52) if phone is 10 digits (local format)
-        if len(clean_phone) == 10 and not clean_phone.startswith("52"):
+        # Normalize to Evolution API format: 52XXXXXXXXXX (no +, just digits)
+        if len(clean_phone) == 10:
+            # Local format (no country code) -> add 52
             clean_phone = "52" + clean_phone
+        elif len(clean_phone) == 12 and clean_phone.startswith("52"):
+            # Already has 52 prefix -> keep as is
+            pass
+        elif len(clean_phone) == 13 and clean_phone.startswith("521"):
+            # Has 521 (old mobile format) -> convert to 52
+            clean_phone = "52" + clean_phone[3:]
+        elif len(clean_phone) > 12 and clean_phone.startswith("52"):
+            # Too long but starts with 52 -> trim to 12 digits
+            clean_phone = clean_phone[:12]
         
         return {
             "phone": clean_phone,
