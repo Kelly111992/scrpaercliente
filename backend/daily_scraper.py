@@ -175,9 +175,9 @@ class AutomatedScraper:
         
         # Generate message
         if not details["website_snippet"] or details["website_snippet"] == "Could not load website.":
-            details["ai_analysis"] = f"¡Hola! Estuve viendo el perfil de {details['name']} y me encantó el trabajo que realizan. Noté que aún no cuentan con un sitio web oficial, y hoy en día eso es clave para convertir seguidores en clientes.\n\nEn CLAVE.AI ayudamos a negocios a automatizar su crecimiento. Te invito a conocer nuestros servicios en https://claveai.lat y ver nuestro trabajo en https://www.instagram.com/claveai/."
+            details["ai_analysis"] = f"¡Hola! Estuve viendo el perfil de {details['name']} y me encantó el trabajo que realizan. Noté que aún no cuentan con un sitio web oficial, y hoy en día eso es clave para convertir seguidores en clientes.\n\nEn CLAVE.AI ayudamos a negocios a automatizar su crecimiento. Te invito a conocer nuestros servicios en https://claveai.com.mx y ver nuestro trabajo en https://www.instagram.com/claveai/."
         else:
-            details["ai_analysis"] = f"¡Hola! Vi la web de {details['name']} y me pareció excelente. Sin embargo, noté algunas oportunidades para optimizar la conversión con IA.\n\nEn CLAVE.AI nos especializamos en potenciar negocios digitales. Puedes ver lo que hacemos en https://claveai.lat y seguirnos en https://www.instagram.com/claveai/."
+            details["ai_analysis"] = f"¡Hola! Vi la web de {details['name']} y me pareció excelente. Sin embargo, noté algunas oportunidades para optimizar la conversión con IA.\n\nEn CLAVE.AI nos especializamos en potenciar negocios digitales. Puedes ver lo que hacemos en https://claveai.com.mx y seguirnos en https://www.instagram.com/claveai/."
         
         # Try AI analysis if available
         if HAS_ANALYZER and details["website_snippet"]:

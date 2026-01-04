@@ -145,7 +145,7 @@ class GMapsScraper:
                                     "reviews_count": "0",
                                     "google_maps_url": href,
                                     "website_snippet": f"Instagram Profile: @{username}",
-                                    "ai_analysis": f"¡Hola! Vi el perfil de {username} en Instagram y me encantó su contenido. Noté que podrían potenciar mucho más su marca con un sitio web automatizado que convierta seguidores en clientes las 24/7.\n\nEn CLAVE.AI nos especializamos en esto. ¡Te invito a conocer nuestros servicios en https://claveai.lat y ver nuestro trabajo en https://www.instagram.com/claveai/!"
+                                    "ai_analysis": f"¡Hola! Vi el perfil de {username} en Instagram y me encantó su contenido. Noté que podrían potenciar mucho más su marca con un sitio web automatizado que convierta seguidores en clientes las 24/7.\n\nEn CLAVE.AI nos especializamos en esto. ¡Te invito a conocer nuestros servicios en https://claveai.com.mx y ver nuestro trabajo en https://www.instagram.com/claveai/!"
                                 }
                                 
                                 self.jobs[job_id]["leads"].append(lead)
@@ -221,9 +221,9 @@ class GMapsScraper:
                                 
                                 # Improved Speech Template
                                 if not lead["website_snippet"] or lead["website_snippet"] == "Could not load website.":
-                                    lead["ai_analysis"] = f"¡Hola! Estuve viendo el perfil de {lead['name']} y me encantó el trabajo que realizan. Noté que aún no cuentan con un sitio web oficial, y hoy en día eso es clave para convertir seguidores en clientes.\n\nEn CLAVE.AI ayudamos a negocios a automatizar su crecimiento. Te invito a conocer nuestros servicios en https://claveai.lat y ver nuestro trabajo en https://www.instagram.com/claveai/."
+                                    lead["ai_analysis"] = f"¡Hola! Estuve viendo el perfil de {lead['name']} y me encantó el trabajo que realizan. Noté que aún no cuentan con un sitio web oficial, y hoy en día eso es clave para convertir seguidores en clientes.\n\nEn CLAVE.AI ayudamos a negocios a automatizar su crecimiento. Te invito a conocer nuestros servicios en https://claveai.com.mx y ver nuestro trabajo en https://www.instagram.com/claveai/."
                                 else:
-                                    lead["ai_analysis"] = f"¡Hola! Vi la web de {lead['name']} y me pareció excelente. Sin embargo, noté algunas oportunidades para optimizar la conversión con IA.\n\nEn CLAVE.AI nos especializamos en potenciar negocios digitales. Puedes ver lo que hacemos en https://claveai.lat y seguirnos en https://www.instagram.com/claveai/."
+                                    lead["ai_analysis"] = f"¡Hola! Vi la web de {lead['name']} y me pareció excelente. Sin embargo, noté algunas oportunidades para optimizar la conversión con IA.\n\nEn CLAVE.AI nos especializamos en potenciar negocios digitales. Puedes ver lo que hacemos en https://claveai.com.mx y seguirnos en https://www.instagram.com/claveai/."
 
                                 # AI Analysis call (Re-enabling for better personalization)
                                 await asyncio.sleep(1)

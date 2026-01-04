@@ -1,0 +1,26 @@
+
+ CLAVE.AI Automated Lead Scraper
+ Date: 2026-01-04 13:37
+ Day: Sunday
+ URL: https://www.google.com.mx/maps/search/despachos+de+abogados/...
+ Webhook: https://evolutionapi-n8n.ckoomq.easypanel.host/web...
+
+============================================================
+[START] Scraping: https://www.google.com.mx/maps/search/despachos+de+abogados/@20.6558368,-103.354...
+[CONFIG] Max leads: 3, Delay: 2000-5000ms
+============================================================
+
+[LEAD 1] Fonseca & Flores Abogados | Phone: 
+33 3611 3971
+[LEAD 2] VILA Abogados | Phone: 
+33 1204 0477
+[LEAD 3] Licenciados. Corporativo Hernandez despacho de Abogados | Phone: 
+33 2585 6715
+[N8N] Sent 3 leads in ONE call | Status: 200
+
+============================================================
+[DONE] Extracted: 3 leads | Sent to n8n: 3 (in 1 call)
+============================================================
+
+
+ Completed! Total leads: 3

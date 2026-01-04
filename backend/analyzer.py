@@ -31,7 +31,7 @@ class AIAnalyzer:
                - IMPORTANTE: NO incluyas links de Google Maps ni links externos del propio cliente en el mensaje.
                - Menciona de forma empática cómo la falta de una plataforma web profesional les hace perder oportunidades frente a la competencia.
                - Explica brevemente cómo la Inteligencia Artificial y la automatización en CLAVE.AI pueden ayudarlos a captar clientes 24/7.
-               - Cierra con un CTA (Llamado a la acción) incluyendo únicamente los links de CLAVE.AI: Web: https://claveai.lat e Instagram: https://www.instagram.com/claveai/
+               - Cierra con un CTA (Llamado a la acción) incluyendo únicamente los links de CLAVE.AI: Web: https://claveai.com.mx e Instagram: https://www.instagram.com/claveai/
             3. SERVICIO RECOMENDADO: Menciona el servicio más apto de CLAVE.AI.
             
             Tono: Profesional, visionario y cercano. Máximo 100 palabras.
@@ -51,7 +51,7 @@ class AIAnalyzer:
                - Valida su presencia actual (ej: "Me gustó mucho su sección de...").
                - IMPORTANTE: NO incluyas links de Google Maps ni links externos del propio cliente.
                - Sugiere una mejora específica basada en IA o automatización que solo CLAVE.AI ofrece.
-               - Al final, invita a conocer más en nuestra web https://claveai.lat y ver nuestro Instagram https://www.instagram.com/claveai/ para darles confianza.
+               - Al final, invita a conocer más en nuestra web https://claveai.com.mx y ver nuestro Instagram https://www.instagram.com/claveai/ para darles confianza.
             3. SERVICIO RECOMENDADO: Qué solución de CLAVE.AI les encaja mejor.
             
             REGLA DE ORO: Evita sonar como un script de ventas aburrido. Sé humano, experto y directo al valor.
