@@ -2,9 +2,12 @@ name: Daily Lead Scraper
 
 on:
   schedule:
-    # Runs at 10:00 AM Mexico City time (UTC-6) every day
-    # 10:00 CST = 16:00 UTC
-    - cron: '0 16 * * *'
+    # 5 ejecuciones diarias, 1 lead cada hora (hora México CST = UTC-6)
+    - cron: '0 14 * * *'  # 8:00 AM México
+    - cron: '0 15 * * *'  # 9:00 AM México
+    - cron: '0 16 * * *'  # 10:00 AM México
+    - cron: '0 17 * * *'  # 11:00 AM México
+    - cron: '0 18 * * *'  # 12:00 PM México
   
   # Allow manual trigger
   workflow_dispatch:
@@ -39,7 +42,7 @@ jobs:
       - name: Run Daily Scraper
         env:
           N8N_WEBHOOK_URL: ${{ secrets.N8N_WEBHOOK_URL }}
-          MAX_LEADS: '3'
+          MAX_LEADS: '1'  # 1 lead por ejecución, 5 ejecuciones = 5 leads/día
           DELAY_MAX_MS: '5000'
         run: |
           cd backend
@@ -60,3 +63,4 @@ jobs:
             git diff --cached --quiet || git commit -m "🤖 Update contacted leads tracking [skip ci]"
             git push
           fi
+
