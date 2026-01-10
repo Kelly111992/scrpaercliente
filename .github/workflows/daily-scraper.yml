@@ -21,6 +21,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -45,4 +47,16 @@ jobs:
             python daily_scraper.py ${{ github.event.inputs.day_override }}
           else
             python daily_scraper.py
+          fi
+
+      # Persistir el archivo de tracking para evitar duplicados
+      - name: Commit tracking file
+        run: |
+          cd backend
+          if [ -f "contacted_leads.json" ]; then
+            git config --local user.email "github-actions[bot]@users.noreply.github.com"
+            git config --local user.name "github-actions[bot]"
+            git add contacted_leads.json
+            git diff --cached --quiet || git commit -m "🤖 Update contacted leads tracking [skip ci]"
+            git push
           fi

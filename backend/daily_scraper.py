@@ -7,26 +7,113 @@ Runs automatically via GitHub Actions cron, selecting URL based on day of week.
 import asyncio
 import os
 import sys
+import json
 from datetime import datetime
 from dotenv import load_dotenv
 
 load_dotenv()
 
-# URLs for each day of the week (0 = Monday, 6 = Sunday)
-DAILY_URLS = {
-    0: "https://www.google.com.mx/maps/search/salon+de+belleza/@20.6558451,-103.3240786,15z",  # Monday
-    1: "https://www.google.com.mx/maps/search/terapeutas/@20.6558445,-103.3240786,15z",        # Tuesday
-    2: "https://www.google.com.mx/maps/search/psicologos/@20.6558439,-103.3240786,15z",        # Wednesday
-    3: "https://www.google.com.mx/maps/search/gimnasio/@20.6558432,-103.3240786,15z",          # Thursday
-    4: "https://www.google.com.mx/maps/search/dentista/@20.6558426,-103.3240786,15z",          # Friday
-    5: "https://www.google.com.mx/maps/search/inmobiliaria/@20.655842,-103.3240786,15z",       # Saturday
-    6: "https://www.google.com.mx/maps/search/despachos+de+abogados/@20.6558368,-103.3549785,13z",  # Sunday
+# =============================================================================
+# 28 NICHOS - Rotación por semana del mes (1-4) y día de la semana (0-6)
+# =============================================================================
+NICHOS = {
+    # SEMANA 1 (días 1-7 del mes)
+    (1, 0): "veterinaria",
+    (1, 1): "escuela+de+idiomas",
+    (1, 2): "restaurante",
+    (1, 3): "cafeteria",
+    (1, 4): "estudio+de+fotografia",
+    (1, 5): "floristeria",
+    (1, 6): "taller+mecanico",
+    
+    # SEMANA 2 (días 8-14 del mes)
+    (2, 0): "cerrajeria",
+    (2, 1): "agencia+de+viajes",
+    (2, 2): "escuela+de+baile",
+    (2, 3): "tienda+de+mascotas",
+    (2, 4): "optica",
+    (2, 5): "farmacia",
+    (2, 6): "papeleria",
+    
+    # SEMANA 3 (días 15-21 del mes)
+    (3, 0): "imprenta",
+    (3, 1): "lavanderia",
+    (3, 2): "spa",
+    (3, 3): "escuela+de+musica",
+    (3, 4): "joyeria",
+    (3, 5): "muebleria",
+    (3, 6): "ferreteria",
+    
+    # SEMANA 4 (días 22-31 del mes)
+    (4, 0): "clinica+dental",
+    (4, 1): "nutriologo",
+    (4, 2): "fisioterapia",
+    (4, 3): "consultorio+medico",
+    (4, 4): "salon+de+eventos",
+    (4, 5): "escuela+de+manejo",
+    (4, 6): "agencia+de+seguros",
 }
 
-# Extra URLs for variety (can be used with --extra flag)
-EXTRA_URLS = [
-    "https://www.google.com.mx/maps/search/agencias+de+seguros/@20.6558368,-103.3549785,13z",
-]
+# =============================================================================
+# 12 ZONAS DE GUADALAJARA - Rotación por mes
+# =============================================================================
+ZONAS_GDL = {
+    1:  {"nombre": "Centro GDL",       "lat": 20.6767, "lng": -103.3475, "zoom": 14},
+    2:  {"nombre": "Zapopan Centro",   "lat": 20.7214, "lng": -103.3863, "zoom": 14},
+    3:  {"nombre": "Tlaquepaque",      "lat": 20.6409, "lng": -103.3127, "zoom": 14},
+    4:  {"nombre": "Tonalá",           "lat": 20.6249, "lng": -103.2345, "zoom": 14},
+    5:  {"nombre": "Providencia",      "lat": 20.7002, "lng": -103.3921, "zoom": 14},
+    6:  {"nombre": "Chapultepec",      "lat": 20.6871, "lng": -103.3678, "zoom": 14},
+    7:  {"nombre": "Americana",        "lat": 20.6726, "lng": -103.3621, "zoom": 14},
+    8:  {"nombre": "Santa Tere",       "lat": 20.6654, "lng": -103.3512, "zoom": 14},
+    9:  {"nombre": "Oblatos",          "lat": 20.6923, "lng": -103.3201, "zoom": 14},
+    10: {"nombre": "Medrano",          "lat": 20.6612, "lng": -103.3289, "zoom": 14},
+    11: {"nombre": "Mezquitan",        "lat": 20.6945, "lng": -103.3567, "zoom": 14},
+    12: {"nombre": "Miravalle",        "lat": 20.6321, "lng": -103.3012, "zoom": 14},
+}
+
+def get_daily_url():
+    """
+    Genera la URL de Google Maps basada en:
+    - Semana del mes (1-4) + Día de la semana (0-6) -> Determina el NICHO
+    - Mes del año (1-12) -> Determina la ZONA geográfica
+    
+    Esto da 28 nichos × 12 zonas = 336 combinaciones únicas
+    """
+    today = datetime.now()
+    
+    # Calcular semana del mes (1-4)
+    day_of_month = today.day
+    if day_of_month <= 7:
+        week_of_month = 1
+    elif day_of_month <= 14:
+        week_of_month = 2
+    elif day_of_month <= 21:
+        week_of_month = 3
+    else:
+        week_of_month = 4
+    
+    # Día de la semana (0=Lunes, 6=Domingo)
+    day_of_week = today.weekday()
+    
+    # Mes del año (1-12)
+    month = today.month
+    
+    # Obtener nicho y zona
+    nicho = NICHOS.get((week_of_month, day_of_week), "negocio+local")
+    zona = ZONAS_GDL.get(month, ZONAS_GDL[1])
+    
+    # Construir URL
+    url = f"https://www.google.com.mx/maps/search/{nicho}/@{zona['lat']},{zona['lng']},{zona['zoom']}z"
+    
+    return {
+        "url": url,
+        "nicho": nicho.replace("+", " "),
+        "zona": zona["nombre"],
+        "semana": week_of_month,
+        "dia": day_of_week,
+        "mes": month
+    }
 
 import random
 import httpx
@@ -41,6 +128,89 @@ except ImportError:
     print("[WARN] AI Analyzer not available, using template messages")
 
 
+# =============================================================================
+# SISTEMA DE TRACKING - Evita contactar el mismo teléfono dos veces
+# =============================================================================
+class LeadTracker:
+    """
+    Mantiene un registro de todos los teléfonos ya contactados.
+    Persiste los datos en un archivo JSON para mantener el historial.
+    """
+    
+    def __init__(self, tracking_file="contacted_leads.json"):
+        self.tracking_file = os.path.join(os.path.dirname(__file__), tracking_file)
+        self.contacted_phones = set()
+        self._load_tracking_data()
+    
+    def _load_tracking_data(self):
+        """Carga los teléfonos ya contactados desde el archivo"""
+        try:
+            if os.path.exists(self.tracking_file):
+                with open(self.tracking_file, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                    self.contacted_phones = set(data.get("phones", []))
+                    print(f"[TRACKER] Loaded {len(self.contacted_phones)} previously contacted phones")
+            else:
+                print("[TRACKER] No previous tracking data found, starting fresh")
+        except Exception as e:
+            print(f"[TRACKER] Error loading tracking data: {e}")
+            self.contacted_phones = set()
+    
+    def _save_tracking_data(self):
+        """Guarda los teléfonos contactados al archivo"""
+        try:
+            data = {
+                "phones": list(self.contacted_phones),
+                "total_count": len(self.contacted_phones),
+                "last_updated": datetime.now().isoformat()
+            }
+            with open(self.tracking_file, 'w', encoding='utf-8') as f:
+                json.dump(data, f, indent=2, ensure_ascii=False)
+            print(f"[TRACKER] Saved {len(self.contacted_phones)} phones to tracking file")
+        except Exception as e:
+            print(f"[TRACKER] Error saving tracking data: {e}")
+    
+    def is_contacted(self, phone: str) -> bool:
+        """Verifica si un teléfono ya fue contactado"""
+        return phone in self.contacted_phones
+    
+    def mark_as_contacted(self, phone: str):
+        """Marca un teléfono como contactado"""
+        self.contacted_phones.add(phone)
+    
+    def filter_new_leads(self, leads: list) -> tuple:
+        """
+        Filtra leads que ya fueron contactados.
+        Retorna: (leads_nuevos, leads_duplicados)
+        """
+        new_leads = []
+        duplicate_leads = []
+        
+        for lead in leads:
+            phone = lead.get("phone", "")
+            if phone and not self.is_contacted(phone):
+                new_leads.append(lead)
+            else:
+                duplicate_leads.append(lead)
+        
+        return new_leads, duplicate_leads
+    
+    def add_contacted_leads(self, leads: list):
+        """Agrega una lista de leads al tracking y guarda"""
+        for lead in leads:
+            phone = lead.get("phone", "")
+            if phone:
+                self.mark_as_contacted(phone)
+        self._save_tracking_data()
+    
+    def get_stats(self) -> dict:
+        """Retorna estadísticas del tracking"""
+        return {
+            "total_contacted": len(self.contacted_phones),
+            "tracking_file": self.tracking_file
+        }
+
+
 class AutomatedScraper:
     def __init__(self):
         # Clean webhook URL from any whitespace/newlines
@@ -50,6 +220,8 @@ class AutomatedScraper:
         self.delay_min = int(os.getenv("DELAY_MIN_MS", "2000"))
         self.delay_max = int(os.getenv("DELAY_MAX_MS", "5000"))
         self.leads = []
+        # Initialize lead tracker to avoid contacting duplicates
+        self.tracker = LeadTracker()
         
     def clean_lead(self, lead):
         """Clean a lead's data from whitespace and newlines"""
@@ -81,7 +253,7 @@ class AutomatedScraper:
         }
         
     async def send_all_to_n8n(self, leads_list):
-        """Send ALL leads to n8n webhook in a single call"""
+        """Send ALL leads to n8n webhook in a single call, filtering duplicates"""
         if not self.n8n_webhook_url:
             print(f"[WARN] No N8N_WEBHOOK_URL configured")
             return False
@@ -97,11 +269,27 @@ class AutomatedScraper:
             print(f"[WARN] No leads with phone numbers to send")
             return False
         
+        # =====================================================================
+        # FILTRAR DUPLICADOS - Evitar contactar el mismo teléfono dos veces
+        # =====================================================================
+        new_leads, duplicate_leads = self.tracker.filter_new_leads(cleaned_leads)
+        
+        if duplicate_leads:
+            print(f"[TRACKER] ⚠️  Filtered out {len(duplicate_leads)} already contacted leads")
+            for dup in duplicate_leads:
+                print(f"    - {dup.get('lead_name', 'N/A')} ({dup.get('phone', 'N/A')})")
+        
+        if not new_leads:
+            print(f"[TRACKER] ℹ️  All leads were already contacted. No new leads to send.")
+            return True  # Not an error, just no new leads
+        
+        print(f"[TRACKER] ✅ {len(new_leads)} NEW leads to contact (out of {len(cleaned_leads)} total)")
+        
         try:
             async with httpx.AsyncClient() as client:
                 payload = {
-                    "leads": cleaned_leads,
-                    "total_count": len(cleaned_leads),
+                    "leads": new_leads,  # Only send NEW leads
+                    "total_count": len(new_leads),
                     "source": "automated_scraper",
                     "timestamp": datetime.now().isoformat()
                 }
@@ -111,7 +299,14 @@ class AutomatedScraper:
                 for attempt in range(max_retries):
                     try:
                         response = await client.post(self.n8n_webhook_url, json=payload, timeout=60.0)
-                        print(f"[N8N] Sent {len(cleaned_leads)} leads in ONE call | Status: {response.status_code}")
+                        print(f"[N8N] Sent {len(new_leads)} NEW leads in ONE call | Status: {response.status_code}")
+                        
+                        # Si el envío fue exitoso, registrar los leads como contactados
+                        if response.status_code == 200:
+                            self.tracker.add_contacted_leads(new_leads)
+                            stats = self.tracker.get_stats()
+                            print(f"[TRACKER] 📊 Total histórico de leads contactados: {stats['total_contacted']}")
+                        
                         return response.status_code == 200
                     except httpx.TimeoutException as timeout_err:
                         if attempt < max_retries - 1:
@@ -286,31 +481,28 @@ class AutomatedScraper:
 
 
 async def main():
-    # Determine which URL to use based on day of week
+    # Obtener URL dinámica basada en día + semana + mes
+    config = get_daily_url()
     today = datetime.now()
-    day_of_week = today.weekday()  # 0 = Monday, 6 = Sunday
     
-    day_names = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    day_names = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"]
     
-    # Check for command line override
-    if len(sys.argv) > 1:
-        try:
-            day_of_week = int(sys.argv[1])
-        except ValueError:
-            pass
-    
-    url = DAILY_URLS.get(day_of_week, DAILY_URLS[0])
-    
-    print(f"\n🚀 CLAVE.AI Automated Lead Scraper")
-    print(f"📅 Date: {today.strftime('%Y-%m-%d %H:%M')}")
-    print(f"📆 Day: {day_names[day_of_week]}")
-    print(f"🔗 URL: {url[:60]}...")
+    print(f"\n🚀 CLAVE.AI Automated Lead Scraper v2.0")
+    print(f"{'='*60}")
+    print(f"📅 Fecha: {today.strftime('%Y-%m-%d %H:%M')}")
+    print(f"📆 Día: {day_names[config['dia']]} (Semana {config['semana']} del mes)")
+    print(f"🏪 Nicho: {config['nicho'].upper()}")
+    print(f"📍 Zona: {config['zona']}")
+    print(f"🔗 URL: {config['url'][:70]}...")
     print(f"📡 Webhook: {os.getenv('N8N_WEBHOOK_URL', 'NOT SET')[:50]}...")
+    print(f"{'='*60}")
     
     scraper = AutomatedScraper()
-    leads = await scraper.scrape_url(url)
+    leads = await scraper.scrape_url(config['url'])
     
-    print(f"\n✅ Completed! Total leads: {len(leads)}")
+    print(f"\n✅ Completado! Total leads: {len(leads)}")
+    print(f"📊 Combinación única: Mes {config['mes']} + Semana {config['semana']} + Día {config['dia']}")
+
     
 
 if __name__ == "__main__":
