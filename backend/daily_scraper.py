@@ -72,13 +72,17 @@ ZONAS_GDL = {
     12: {"nombre": "Miravalle",        "lat": 20.6321, "lng": -103.3012, "zoom": 14},
 }
 
-def get_daily_url():
+def get_daily_url(day_override=None, zone_offset=0):
     """
     Genera la URL de Google Maps basada en:
     - Semana del mes (1-4) + Día de la semana (0-6) -> Determina el NICHO
-    - Mes del año (1-12) -> Determina la ZONA geográfica
+    - Mes del año (1-12) + zone_offset -> Determina la ZONA geográfica
     
     Esto da 28 nichos × 12 zonas = 336 combinaciones únicas
+    
+    Args:
+        day_override: Override para el día de la semana (0-6)
+        zone_offset: Offset para probar zonas adicionales (0-11), útil para fallback
     """
     today = datetime.now()
     
@@ -94,17 +98,27 @@ def get_daily_url():
         week_of_month = 4
     
     # Día de la semana (0=Lunes, 6=Domingo)
-    day_of_week = today.weekday()
+    if day_override is not None:
+        try:
+            day_of_week = int(day_override)
+            print(f"[CONFIG] Overriding day of week with: {day_of_week}")
+        except:
+            day_of_week = today.weekday()
+    else:
+        day_of_week = today.weekday()
     
-    # Mes del año (1-12)
-    month = today.month
+    # Mes del año (1-12) + zone_offset para fallback
+    base_month = today.month
+    # Rotar entre las 12 zonas usando el offset
+    effective_zone = ((base_month - 1 + zone_offset) % 12) + 1
     
     # Obtener nicho y zona
     nicho = NICHOS.get((week_of_month, day_of_week), "negocio+local")
-    zona = ZONAS_GDL.get(month, ZONAS_GDL[1])
+    zona = ZONAS_GDL.get(effective_zone, ZONAS_GDL[1])
     
-    # Construir URL
-    url = f"https://www.google.com.mx/maps/search/{nicho}/@{zona['lat']},{zona['lng']},{zona['zoom']}z"
+    # Construir URL con zoom más amplio (13z en vez de 14z) para más resultados
+    zoom = 13 if zone_offset > 0 else zona['zoom']
+    url = f"https://www.google.com.mx/maps/search/{nicho}/@{zona['lat']},{zona['lng']},{zoom}z"
     
     return {
         "url": url,
@@ -112,7 +126,9 @@ def get_daily_url():
         "zona": zona["nombre"],
         "semana": week_of_month,
         "dia": day_of_week,
-        "mes": month
+        "mes": base_month,
+        "zone_offset": zone_offset,
+        "effective_zone": effective_zone
     }
 
 import random
@@ -418,7 +434,10 @@ class AutomatedScraper:
                 processed_urls = set()
                 sent_count = 0
 
-                while leads_count < self.max_leads:
+                processed_count = 0
+                max_attempts = self.max_leads * 5  # No buscar infinitamente, máximo 5x el límite
+
+                while leads_count < self.max_leads and processed_count < max_attempts:
                     links = await page.locator('a[href*="/maps/place/"]').all()
                     
                     if not links:
@@ -429,7 +448,7 @@ class AutomatedScraper:
                             break
 
                     for link in links:
-                        if leads_count >= self.max_leads:
+                        if leads_count >= self.max_leads or processed_count >= max_attempts:
                             break
                         
                         href = await link.get_attribute("href")
@@ -437,28 +456,39 @@ class AutomatedScraper:
                             continue
                             
                         processed_urls.add(href)
+                        processed_count += 1
                         
                         try:
+                            # Hacer scroll al elemento para que sea visible
+                            await link.scroll_into_view_if_needed()
                             await link.click()
                             await asyncio.sleep(random.randint(self.delay_min, self.delay_max) / 1000)
                             
                             lead = await self.extract_details(page, href)
-                            self.leads.append(lead)
-                            leads_count += 1
                             
-                            print(f"[LEAD {leads_count}] {lead['name']} | Phone: {lead['phone'] or 'N/A'}")
-                                    
+                            # Verificar si tiene teléfono y no ha sido contactado antes de contarlo como lead
+                            cleaned = self.clean_lead(lead)
+                            if cleaned["phone"] and not self.tracker.is_contacted(cleaned["phone"]):
+                                self.leads.append(lead)
+                                leads_count += 1
+                                print(f"[LEAD {leads_count}] {lead['name']} | Phone: {lead['phone']} ✅ NUEVO")
+                            else:
+                                status = "SIN TELÉFONO" if not cleaned["phone"] else "DUPLICADO"
+                                print(f"[SKIP] {lead['name']} | {status}")
+                                     
                         except Exception as e:
                             print(f"[ERROR] Extracting lead: {e}")
                             continue
 
-                    # Scroll for more
-                    await page.mouse.wheel(0, 2000)
-                    await asyncio.sleep(2)
+                    # Scroll for more para la siguiente iteración si aún faltan leads
+                    if leads_count < self.max_leads:
+                        await page.mouse.wheel(0, 2000)
+                        await asyncio.sleep(2)
                     
                     # Check end of list
                     try:
                         if await page.locator('text="You\'ve reached the end of the list"').is_visible():
+                            print("[INFO] Reached end of Google Maps list")
                             break
                     except:
                         pass
@@ -481,29 +511,61 @@ class AutomatedScraper:
 
 
 async def main():
-    # Obtener URL dinámica basada en día + semana + mes
-    config = get_daily_url()
+    # Obtener override de día si se pasa por argumento
+    day_arg = sys.argv[1] if len(sys.argv) > 1 else None
     today = datetime.now()
-    
     day_names = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"]
     
-    print(f"\n🚀 CLAVE.AI Automated Lead Scraper v2.0")
-    print(f"{'='*60}")
-    print(f"📅 Fecha: {today.strftime('%Y-%m-%d %H:%M')}")
-    print(f"📆 Día: {day_names[config['dia']]} (Semana {config['semana']} del mes)")
-    print(f"🏪 Nicho: {config['nicho'].upper()}")
-    print(f"📍 Zona: {config['zona']}")
-    print(f"🔗 URL: {config['url'][:70]}...")
-    print(f"📡 Webhook: {os.getenv('N8N_WEBHOOK_URL', 'NOT SET')[:50]}...")
+    print(f"\n🚀 CLAVE.AI Automated Lead Scraper v2.2 (con fallback de zonas)")
     print(f"{'='*60}")
     
-    scraper = AutomatedScraper()
-    leads = await scraper.scrape_url(config['url'])
+    # =========================================================================
+    # ESTRATEGIA DE FALLBACK: Si no hay leads nuevos, probar otras zonas
+    # =========================================================================
+    MAX_ZONE_ATTEMPTS = 4  # Probar hasta 4 zonas diferentes
+    total_new_leads = 0
     
-    print(f"\n✅ Completado! Total leads: {len(leads)}")
-    print(f"📊 Combinación única: Mes {config['mes']} + Semana {config['semana']} + Día {config['dia']}")
+    for zone_offset in range(MAX_ZONE_ATTEMPTS):
+        # Obtener URL dinámica basada en día + semana + mes + zone_offset
+        config = get_daily_url(day_override=day_arg, zone_offset=zone_offset)
+        
+        print(f"\n{'='*60}")
+        print(f"📅 Fecha Actual: {today.strftime('%Y-%m-%d %H:%M')}")
+        print(f"📆 Día a procesar: {day_names[config['dia']]} (Semana {config['semana']} del mes)")
+        print(f"🏪 Nicho: {config['nicho'].upper()}")
+        print(f"📍 Zona: {config['zona']} {'(FALLBACK #'+str(zone_offset)+')' if zone_offset > 0 else '(PRIMARIA)'}")
+        print(f"🔗 URL: {config['url'][:80]}...")
+        print(f"📡 Webhook: {os.getenv('N8N_WEBHOOK_URL', 'NOT SET')[:50]}...")
+        print(f"{'='*60}")
+        
+        scraper = AutomatedScraper()
+        leads = await scraper.scrape_url(config['url'])
+        
+        # Contar leads NUEVOS que realmente se enviaron
+        # (los que pasaron el filtro de duplicados)
+        new_leads_sent = len([l for l in leads if l.get("phone")])
+        
+        if new_leads_sent > 0:
+            total_new_leads += new_leads_sent
+            print(f"\n✅ ¡Éxito! Enviados {new_leads_sent} leads nuevos desde {config['zona']}")
+            break  # Encontramos leads, no necesitamos más fallback
+        else:
+            if zone_offset < MAX_ZONE_ATTEMPTS - 1:
+                print(f"\n⚠️ No se encontraron leads NUEVOS en {config['zona']}")
+                print(f"🔄 Probando siguiente zona de fallback...")
+            else:
+                print(f"\n❌ Se agotaron todas las zonas de fallback sin encontrar leads nuevos")
+    
+    print(f"\n{'='*60}")
+    print(f"📊 RESUMEN FINAL")
+    print(f"{'='*60}")
+    print(f"✅ Total leads nuevos enviados: {total_new_leads}")
+    print(f"📊 Combinación base: Mes {config['mes']} + Semana {config['semana']} + Día {config['dia']}")
+    print(f"📍 Zonas intentadas: {zone_offset + 1}")
+    print(f"{'='*60}\n")
 
     
 
 if __name__ == "__main__":
     asyncio.run(main())
+
