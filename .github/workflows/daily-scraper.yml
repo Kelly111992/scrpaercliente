@@ -38,10 +38,10 @@ jobs:
           playwright install chromium
           playwright install-deps
 
-      - name: Run Daily Scraper
+      - name: Run Daily Scraper (Nuevos Leads)
         env:
           N8N_WEBHOOK_URL: ${{ secrets.N8N_WEBHOOK_URL }}
-          MAX_LEADS: '5'  # Escanear 5 negocios, enviar solo los NUEVOS (no contactados antes)
+          MAX_LEADS: '5'  # Máximo 5 leads nuevos por día
           DELAY_MAX_MS: '5000'
         run: |
           cd backend
@@ -50,6 +50,13 @@ jobs:
           else
             python daily_scraper.py
           fi
+
+      - name: Send Follow-ups (Leads de hace 3 días)
+        env:
+          N8N_WEBHOOK_URL: ${{ secrets.N8N_WEBHOOK_URL }}
+        run: |
+          cd backend
+          python send_followups.py
 
       # Persistir el archivo de tracking para evitar duplicados
       - name: Commit tracking file
@@ -62,4 +69,3 @@ jobs:
             git diff --cached --quiet || git commit -m "🤖 Update contacted leads tracking [skip ci]"
             git push
           fi
-

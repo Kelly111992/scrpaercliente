@@ -55,6 +55,137 @@ NICHOS = {
 }
 
 # =============================================================================
+# MENSAJES PERSONALIZADOS POR NICHO - Cada uno termina con pregunta abierta
+# =============================================================================
+MENSAJES_POR_NICHO = {
+    # SEMANA 1
+    "veterinaria": {
+        "mensaje": "Qué tal! Vi tu veterinaria {nombre} en Google Maps.\nHago sistemas de recordatorios automáticos de citas y vacunas para veterinarias.\n¿Actualmente cómo le haces para recordarle a tus clientes sus citas? 🐾",
+        "followup": "Hola de nuevo! Te escribí hace unos días sobre automatizar recordatorios en {nombre}.\n¿Te gustaría que te muestre cómo funciona en 5 min? Sin compromiso 👍"
+    },
+    "escuela+de+idiomas": {
+        "mensaje": "Qué tal! Vi tu escuela {nombre} buscando negocios en la zona.\nAyudo a escuelas a conseguir más alumnos con páginas web y seguimiento automático.\n¿Cómo consigues nuevos estudiantes actualmente? 📚",
+        "followup": "Hola! Te contacté hace unos días sobre {nombre}.\n¿Tienes 5 min para platicar cómo podría ayudarte a conseguir más alumnos?"
+    },
+    "restaurante": {
+        "mensaje": "Qué tal! Vi tu restaurante {nombre} en Maps.\nHago menús digitales, sistemas de reservas y pedidos online para restaurantes.\n¿Ya tienes menú con QR o sistema de pedidos? 🍽️",
+        "followup": "Hola! Te escribí hace unos días sobre {nombre}.\n¿Te interesaría un menú digital o sistema de reservas? Puedo mostrarte ejemplos rápido."
+    },
+    "cafeteria": {
+        "mensaje": "Qué tal! Vi tu cafetería {nombre} en Google Maps.\nHago programas de lealtad digitales y pedidos anticipados para cafeterías.\n¿Tienes algún sistema de puntos para clientes frecuentes? ☕",
+        "followup": "Hola de nuevo! Te contacté sobre {nombre} hace unos días.\n¿Te gustaría ver cómo funciona un programa de lealtad digital?"
+    },
+    "estudio+de+fotografia": {
+        "mensaje": "Qué tal! Vi tu estudio {nombre} buscando fotógrafos en la zona.\nHago páginas web tipo portafolio y sistemas de reserva de sesiones.\n¿Cómo muestras tu trabajo a clientes nuevos actualmente? 📸",
+        "followup": "Hola! Te escribí hace unos días sobre crear un portafolio web para {nombre}.\n¿Tienes 5 min para que te muestre algunos ejemplos?"
+    },
+    "floristeria": {
+        "mensaje": "Qué tal! Vi tu florería {nombre} en Maps.\nHago catálogos digitales y pedidos por WhatsApp automatizados para florerías.\n¿Cómo reciben pedidos actualmente, solo llamada o también WhatsApp? 💐",
+        "followup": "Hola! Te contacté sobre {nombre} hace unos días.\n¿Te interesa ver cómo automatizar pedidos por WhatsApp?"
+    },
+    "taller+mecanico": {
+        "mensaje": "Qué tal! Vi tu taller {nombre} en Google Maps.\nHago sistemas de citas online y recordatorios de servicio para talleres.\n¿Cómo le haces para que tus clientes regresen a su próximo servicio? 🔧",
+        "followup": "Hola de nuevo! Te escribí sobre {nombre} hace unos días.\n¿Te gustaría ver cómo funcionan los recordatorios automáticos de servicio?"
+    },
+    
+    # SEMANA 2
+    "cerrajeria": {
+        "mensaje": "Qué tal! Vi tu cerrajería {nombre} en Maps.\nHago páginas web con botón de llamada directa y ubicación para cerrajerías.\n¿La mayoría de tus clientes te encuentran por Google o por recomendación? 🔑",
+        "followup": "Hola! Te contacté hace unos días sobre {nombre}.\n¿Te interesaría aparecer mejor en Google cuando busquen cerrajero?"
+    },
+    "agencia+de+viajes": {
+        "mensaje": "Qué tal! Vi tu agencia {nombre} buscando negocios en la zona.\nHago catálogos de viajes digitales y seguimiento automático de clientes interesados.\n¿Cómo le das seguimiento a la gente que pregunta pero no compra de inmediato? ✈️",
+        "followup": "Hola! Te escribí hace días sobre automatizar seguimiento en {nombre}.\n¿Tienes 5 min para platicar?"
+    },
+    "escuela+de+baile": {
+        "mensaje": "Qué tal! Vi tu escuela {nombre} en Google Maps.\nHago sistemas de inscripción online y recordatorios de clase para escuelas de baile.\n¿Cómo manejan las inscripciones actualmente, presencial o tienen algo online? 💃",
+        "followup": "Hola de nuevo! Te contacté sobre {nombre} hace unos días.\n¿Te interesaría un sistema de inscripción y pagos online?"
+    },
+    "tienda+de+mascotas": {
+        "mensaje": "Qué tal! Vi tu tienda {nombre} en Maps.\nHago tiendas online y recordatorios de compra recurrente para tiendas de mascotas.\n¿Tus clientes pueden comprarte por WhatsApp o solo en tienda? 🐕",
+        "followup": "Hola! Te escribí sobre {nombre} hace unos días.\n¿Te gustaría ver cómo funciona una tienda online integrada con WhatsApp?"
+    },
+    "optica": {
+        "mensaje": "Qué tal! Vi tu óptica {nombre} buscando negocios en la zona.\nHago sistemas de citas online y recordatorios de revisión anual para ópticas.\n¿Cómo agendan citas tus clientes actualmente? 👓",
+        "followup": "Hola! Te contacté hace días sobre automatizar citas en {nombre}.\n¿Tienes 5 min para que te cuente cómo funciona?"
+    },
+    "farmacia": {
+        "mensaje": "Qué tal! Vi tu farmacia {nombre} en Google Maps.\nHago catálogos digitales y pedidos por WhatsApp para farmacias.\n¿Hacen entregas a domicilio o solo venta en mostrador? 💊",
+        "followup": "Hola! Te escribí sobre {nombre} hace unos días.\n¿Te interesaría automatizar pedidos y entregas a domicilio?"
+    },
+    "papeleria": {
+        "mensaje": "Qué tal! Vi tu papelería {nombre} en Maps.\nHago catálogos online y pedidos por WhatsApp para papelerías.\n¿Tus clientes pueden ver qué productos tienes antes de ir a la tienda? 📎",
+        "followup": "Hola de nuevo! Te contacté sobre {nombre} hace días.\n¿Te gustaría un catálogo digital de tus productos?"
+    },
+    
+    # SEMANA 3
+    "imprenta": {
+        "mensaje": "Qué tal! Vi tu imprenta {nombre} buscando negocios en la zona.\nHago cotizadores automáticos y pedidos online para imprentas.\n¿Cómo reciben las solicitudes de cotización actualmente? 🖨️",
+        "followup": "Hola! Te escribí hace días sobre automatizar cotizaciones en {nombre}.\n¿Te interesaría ver cómo funciona un cotizador automático?"
+    },
+    "lavanderia": {
+        "mensaje": "Qué tal! Vi tu lavandería {nombre} en Google Maps.\nHago sistemas de seguimiento de pedidos y recordatorios para lavanderías.\n¿Tus clientes pueden saber cuándo está lista su ropa sin llamar? 🧺",
+        "followup": "Hola! Te contacté sobre {nombre} hace unos días.\n¿Te gustaría que tus clientes reciban aviso automático cuando su ropa esté lista?"
+    },
+    "spa": {
+        "mensaje": "Qué tal! Vi tu spa {nombre} en Maps.\nHago sistemas de reservas online y recordatorios de cita para spas.\n¿Cómo agendan citas tus clientes, por llamada o WhatsApp? 💆",
+        "followup": "Hola de nuevo! Te escribí sobre {nombre} hace días.\n¿Te interesaría un sistema de reservas online para tu spa?"
+    },
+    "escuela+de+musica": {
+        "mensaje": "Qué tal! Vi tu escuela {nombre} buscando negocios en la zona.\nHago páginas web y sistemas de inscripción para escuelas de música.\n¿Cómo consigues nuevos alumnos actualmente? 🎸",
+        "followup": "Hola! Te contacté hace días sobre {nombre}.\n¿Tienes 5 min para platicar sobre cómo conseguir más alumnos?"
+    },
+    "joyeria": {
+        "mensaje": "Qué tal! Vi tu joyería {nombre} en Google Maps.\nHago catálogos digitales elegantes y tiendas online para joyerías.\n¿Tus clientes pueden ver tu catálogo completo online? 💎",
+        "followup": "Hola! Te escribí sobre {nombre} hace unos días.\n¿Te gustaría ver ejemplos de catálogos digitales para joyerías?"
+    },
+    "muebleria": {
+        "mensaje": "Qué tal! Vi tu mueblería {nombre} en Maps.\nHago catálogos digitales con fotos y cotizadores para mueblerías.\n¿Tus clientes pueden ver tus muebles online antes de visitarte? 🛋️",
+        "followup": "Hola de nuevo! Te contacté sobre {nombre} hace días.\n¿Te interesaría un catálogo digital de tus muebles?"
+    },
+    "ferreteria": {
+        "mensaje": "Qué tal! Vi tu ferretería {nombre} buscando negocios en la zona.\nHago catálogos digitales y pedidos por WhatsApp para ferreterías.\n¿Tus clientes pueden consultar si tienes un producto antes de ir? 🔨",
+        "followup": "Hola! Te escribí hace días sobre {nombre}.\n¿Te gustaría que tus clientes puedan consultar inventario online?"
+    },
+    
+    # SEMANA 4
+    "clinica+dental": {
+        "mensaje": "Qué tal! Vi tu clínica {nombre} en Google Maps.\nHago sistemas de citas online y recordatorios automáticos para dentistas.\n¿Cómo agendan citas tus pacientes actualmente? 🦷",
+        "followup": "Hola! Te contacté hace días sobre {nombre}.\n¿Te interesaría automatizar recordatorios de citas para tus pacientes?"
+    },
+    "nutriologo": {
+        "mensaje": "Qué tal! Vi tu consultorio {nombre} en Maps.\nHago sistemas de citas, seguimiento de pacientes y recordatorios para nutriólogos.\n¿Cómo le das seguimiento a tus pacientes entre consultas? 🥗",
+        "followup": "Hola de nuevo! Te escribí sobre {nombre} hace días.\n¿Te gustaría ver cómo automatizar seguimiento de pacientes?"
+    },
+    "fisioterapia": {
+        "mensaje": "Qué tal! Vi tu clínica {nombre} buscando negocios en la zona.\nHago sistemas de citas online y seguimiento de tratamientos para fisioterapeutas.\n¿Cómo agendan sus sesiones tus pacientes? 💪",
+        "followup": "Hola! Te contacté hace días sobre {nombre}.\n¿Te interesaría un sistema de citas y seguimiento de tratamientos?"
+    },
+    "consultorio+medico": {
+        "mensaje": "Qué tal! Vi tu consultorio {nombre} en Google Maps.\nHago sistemas de citas online y recordatorios para consultorios médicos.\n¿Tus pacientes pueden agendar cita online o solo por teléfono? 🏥",
+        "followup": "Hola! Te escribí sobre {nombre} hace unos días.\n¿Te gustaría que tus pacientes agenden citas desde su celular?"
+    },
+    "salon+de+eventos": {
+        "mensaje": "Qué tal! Vi tu salón {nombre} en Maps.\nHago páginas web con galería, cotizador y reservas para salones de eventos.\n¿Cómo muestras tus espacios a clientes que preguntan? 🎉",
+        "followup": "Hola de nuevo! Te contacté sobre {nombre} hace días.\n¿Te interesaría una página web con galería y cotizador?"
+    },
+    "escuela+de+manejo": {
+        "mensaje": "Qué tal! Vi tu escuela {nombre} buscando negocios en la zona.\nHago páginas web y sistemas de inscripción para escuelas de manejo.\n¿Cómo se inscriben tus alumnos actualmente? 🚗",
+        "followup": "Hola! Te escribí hace días sobre {nombre}.\n¿Te gustaría un sistema de inscripción y pagos online?"
+    },
+    "agencia+de+seguros": {
+        "mensaje": "Qué tal! Vi tu agencia {nombre} en Google Maps.\nHago sistemas de seguimiento de clientes y cotizadores automáticos para agentes de seguros.\n¿Cómo le das seguimiento a tus prospectos actualmente? 📋",
+        "followup": "Hola! Te contacté sobre {nombre} hace unos días.\n¿Te interesaría automatizar el seguimiento de tus prospectos?"
+    },
+}
+
+# Mensaje genérico de respaldo
+MENSAJE_DEFAULT = {
+    "mensaje": "Qué tal! Encontré {nombre} buscando negocios en la zona.\nMe dedico a crear sitios web y automatizar ventas para negocios locales.\n¿Cómo consigues clientes nuevos actualmente? 🚀",
+    "followup": "Hola! Te escribí hace unos días sobre {nombre}.\n¿Tienes 5 min para platicar? Sin compromiso 👍"
+}
+
+# =============================================================================
 # 12 ZONAS DE GUADALAJARA - Rotación por mes
 # =============================================================================
 ZONAS_GDL = {
@@ -151,11 +282,13 @@ class LeadTracker:
     """
     Mantiene un registro de todos los teléfonos ya contactados.
     Persiste los datos en un archivo JSON para mantener el historial.
+    Ahora incluye fecha de contacto para sistema de follow-up.
     """
     
     def __init__(self, tracking_file="contacted_leads.json"):
         self.tracking_file = os.path.join(os.path.dirname(__file__), tracking_file)
         self.contacted_phones = set()
+        self.leads_data = {}  # phone -> {contact_date, lead_name, followup_message, followup_sent}
         self._load_tracking_data()
     
     def _load_tracking_data(self):
@@ -165,18 +298,21 @@ class LeadTracker:
                 with open(self.tracking_file, 'r', encoding='utf-8') as f:
                     data = json.load(f)
                     self.contacted_phones = set(data.get("phones", []))
+                    self.leads_data = data.get("leads_data", {})
                     print(f"[TRACKER] Loaded {len(self.contacted_phones)} previously contacted phones")
             else:
                 print("[TRACKER] No previous tracking data found, starting fresh")
         except Exception as e:
             print(f"[TRACKER] Error loading tracking data: {e}")
             self.contacted_phones = set()
+            self.leads_data = {}
     
     def _save_tracking_data(self):
         """Guarda los teléfonos contactados al archivo"""
         try:
             data = {
                 "phones": list(self.contacted_phones),
+                "leads_data": self.leads_data,
                 "total_count": len(self.contacted_phones),
                 "last_updated": datetime.now().isoformat()
             }
@@ -212,23 +348,67 @@ class LeadTracker:
         return new_leads, duplicate_leads
     
     def add_contacted_leads(self, leads: list):
-        """Agrega una lista de leads al tracking y guarda"""
+        """Agrega una lista de leads al tracking con información para follow-up"""
+        contact_date = datetime.now().isoformat()
         for lead in leads:
             phone = lead.get("phone", "")
             if phone:
                 self.mark_as_contacted(phone)
+                # Guardar datos para follow-up
+                self.leads_data[phone] = {
+                    "contact_date": contact_date,
+                    "lead_name": lead.get("lead_name", ""),
+                    "followup_message": lead.get("followup_message", ""),
+                    "followup_sent": False,
+                    "nicho": lead.get("nicho", "")
+                }
+        self._save_tracking_data()
+    
+    def get_leads_for_followup(self, days_since_contact=3):
+        """Obtiene leads que necesitan follow-up (contactados hace X días y sin followup enviado)"""
+        from datetime import timedelta
+        now = datetime.now()
+        leads_to_followup = []
+        
+        for phone, data in self.leads_data.items():
+            if data.get("followup_sent", False):
+                continue  # Ya se envió follow-up
+            
+            try:
+                contact_date = datetime.fromisoformat(data.get("contact_date", ""))
+                days_passed = (now - contact_date).days
+                
+                if days_passed >= days_since_contact:
+                    leads_to_followup.append({
+                        "phone": phone,
+                        "message": data.get("followup_message", ""),
+                        "lead_name": data.get("lead_name", ""),
+                        "days_since_contact": days_passed
+                    })
+            except:
+                continue
+        
+        return leads_to_followup
+    
+    def mark_followup_sent(self, phones: list):
+        """Marca los follow-ups como enviados"""
+        for phone in phones:
+            if phone in self.leads_data:
+                self.leads_data[phone]["followup_sent"] = True
         self._save_tracking_data()
     
     def get_stats(self) -> dict:
         """Retorna estadísticas del tracking"""
+        pending_followups = len([p for p, d in self.leads_data.items() if not d.get("followup_sent", False)])
         return {
             "total_contacted": len(self.contacted_phones),
+            "pending_followups": pending_followups,
             "tracking_file": self.tracking_file
         }
 
 
 class AutomatedScraper:
-    def __init__(self):
+    def __init__(self, nicho=""):
         # Clean webhook URL from any whitespace/newlines
         raw_url = os.getenv("N8N_WEBHOOK_URL", "")
         self.n8n_webhook_url = raw_url.strip().replace("\n", "").replace("\r", "") if raw_url else None
@@ -236,6 +416,8 @@ class AutomatedScraper:
         self.delay_min = int(os.getenv("DELAY_MIN_MS", "2000"))
         self.delay_max = int(os.getenv("DELAY_MAX_MS", "5000"))
         self.leads = []
+        # Nicho actual para mensajes personalizados
+        self.current_nicho = nicho
         # Initialize lead tracker to avoid contacting duplicates
         self.tracker = LeadTracker()
         
@@ -262,8 +444,10 @@ class AutomatedScraper:
         return {
             "phone": clean_phone,
             "message": " ".join(lead.get("ai_analysis", "").split()),
+            "followup_message": " ".join(lead.get("followup_message", "").split()),
             "lead_name": " ".join(lead.get("name", "").split()),
             "category": " ".join(lead.get("category", "").split()),
+            "nicho": lead.get("nicho", ""),
             "website": lead.get("website", "").strip(),
             "google_maps_url": lead.get("google_maps_url", "").strip()
         }
@@ -384,14 +568,25 @@ class AutomatedScraper:
             except:
                 details["website_snippet"] = "Could not load website."
         
-        # Generate message - Opción B: Corto, casual y natural
-        if not details["website_snippet"] or details["website_snippet"] == "Could not load website.":
-            details["ai_analysis"] = f"Qué tal! Encontré {details['name']} buscando negocios en la zona.\nMe dedico a crear sitios web y automatizar ventas.\nSi te interesa, checa mi trabajo: claveai.com.mx 🚀"
-        else:
-            details["ai_analysis"] = f"Qué tal! Encontré {details['name']} buscando negocios en la zona.\nMe dedico a crear sitios web y automatizar ventas.\nSi te interesa, checa mi trabajo: claveai.com.mx 🚀"
+        # =====================================================================
+        # MENSAJES PERSONALIZADOS POR NICHO - con pregunta abierta al final
+        # =====================================================================
+        # Obtener el nicho actual (con + para coincidir con las keys del diccionario)
+        nicho_key = self.current_nicho.replace(" ", "+") if self.current_nicho else ""
         
-        # Try AI analysis if available
-        if HAS_ANALYZER and details["website_snippet"]:
+        # Buscar mensaje personalizado para este nicho
+        mensaje_config = MENSAJES_POR_NICHO.get(nicho_key, MENSAJE_DEFAULT)
+        
+        # Generar mensaje personalizado con el nombre del negocio
+        mensaje = mensaje_config["mensaje"].format(nombre=details['name'])
+        mensaje_followup = mensaje_config["followup"].format(nombre=details['name'])
+        
+        details["ai_analysis"] = mensaje
+        details["followup_message"] = mensaje_followup
+        details["nicho"] = self.current_nicho
+        
+        # Try AI analysis if available (override mensaje personalizado)
+        if HAS_ANALYZER and details["website_snippet"] and details["website_snippet"] != "Could not load website.":
             try:
                 analysis = await ai_analyzer.analyze_business(
                     details["name"], details["category"], details["website_snippet"]
@@ -538,7 +733,7 @@ async def main():
         print(f"📡 Webhook: {os.getenv('N8N_WEBHOOK_URL', 'NOT SET')[:50]}...")
         print(f"{'='*60}")
         
-        scraper = AutomatedScraper()
+        scraper = AutomatedScraper(nicho=config['nicho'])
         leads = await scraper.scrape_url(config['url'])
         
         # Contar leads NUEVOS que realmente se enviaron
