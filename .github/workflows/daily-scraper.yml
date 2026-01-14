@@ -5,12 +5,8 @@ permissions:
 
 on:
   schedule:
-    # 5 ejecuciones diarias, 1 lead cada hora (hora México CST = UTC-6)
-    - cron: '0 14 * * *'  # 8:00 AM México
-    - cron: '0 15 * * *'  # 9:00 AM México
-    - cron: '0 16 * * *'  # 10:00 AM México
-    - cron: '0 17 * * *'  # 11:00 AM México
-    - cron: '0 18 * * *'  # 12:00 PM México
+    # 1 ejecución diaria a las 9:00 AM México (5 leads máximo por día)
+    - cron: '0 15 * * *'  # 9:00 AM México (UTC-6)
   
   # Allow manual trigger
   workflow_dispatch:
