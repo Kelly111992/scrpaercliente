@@ -422,6 +422,43 @@ class AutomatedScraper:
         # Initialize lead tracker to avoid contacting duplicates
         self.tracker = LeadTracker()
         
+        # Evolution API config para verificar WhatsApp
+        self.evolution_url = os.getenv("EVOLUTION_API_URL", "https://evolutionapi-evolution-api.ckoomq.easypanel.host")
+        self.evolution_key = os.getenv("EVOLUTION_API_KEY", "")
+        self.evolution_instance = os.getenv("EVOLUTION_INSTANCE", "claveai")
+    
+    async def check_whatsapp(self, phone: str) -> bool:
+        """Verifica si un número tiene WhatsApp usando Evolution API"""
+        if not self.evolution_key:
+            print(f"[WARN] No EVOLUTION_API_KEY configured, skipping WhatsApp check")
+            return True  # Si no hay key, asumir que sí tiene
+        
+        try:
+            url = f"{self.evolution_url}/chat/whatsappNumbers/{self.evolution_instance}"
+            headers = {
+                "apikey": self.evolution_key,
+                "Content-Type": "application/json"
+            }
+            payload = {"numbers": [phone]}
+            
+            async with httpx.AsyncClient() as client:
+                response = await client.post(url, json=payload, headers=headers, timeout=15.0)
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    # Evolution API devuelve lista de resultados
+                    if isinstance(data, list) and len(data) > 0:
+                        exists = data[0].get("exists", False)
+                        print(f"[WHATSAPP] {phone} -> {'✅ SÍ tiene' if exists else '❌ NO tiene'}")
+                        return exists
+                    return False
+                else:
+                    print(f"[WHATSAPP] Error checking {phone}: {response.status_code}")
+                    return False
+        except Exception as e:
+            print(f"[WHATSAPP] Exception checking {phone}: {e}")
+            return False  # En caso de error, descartar el número
+        
     def clean_lead(self, lead):
         """Clean a lead's data from whitespace and newlines"""
         raw_phone = lead.get("phone", "")
@@ -662,15 +699,28 @@ class AutomatedScraper:
                             
                             lead = await self.extract_details(page, href)
                             
-                            # Verificar si tiene teléfono y no ha sido contactado antes de contarlo como lead
+                            # Verificar si tiene teléfono y no ha sido contactado
                             cleaned = self.clean_lead(lead)
-                            if cleaned["phone"] and not self.tracker.is_contacted(cleaned["phone"]):
-                                self.leads.append(lead)
-                                leads_count += 1
-                                print(f"[LEAD {leads_count}] {lead['name']} | Phone: {lead['phone']} ✅ NUEVO")
-                            else:
-                                status = "SIN TELÉFONO" if not cleaned["phone"] else "DUPLICADO"
-                                print(f"[SKIP] {lead['name']} | {status}")
+                            if not cleaned["phone"]:
+                                print(f"[SKIP] {lead['name']} | SIN TELÉFONO")
+                                continue
+                            
+                            if self.tracker.is_contacted(cleaned["phone"]):
+                                print(f"[SKIP] {lead['name']} | DUPLICADO")
+                                continue
+                            
+                            # =========================================================
+                            # VERIFICAR SI TIENE WHATSAPP con Evolution API
+                            # =========================================================
+                            has_whatsapp = await self.check_whatsapp(cleaned["phone"])
+                            if not has_whatsapp:
+                                print(f"[SKIP] {lead['name']} | NO TIENE WHATSAPP ❌")
+                                continue  # No lo contamos, buscar otro
+                            
+                            # ¡Tiene WhatsApp! Agregarlo como lead válido
+                            self.leads.append(lead)
+                            leads_count += 1
+                            print(f"[LEAD {leads_count}] {lead['name']} | Phone: {lead['phone']} ✅ TIENE WHATSAPP")
                                      
                         except Exception as e:
                             print(f"[ERROR] Extracting lead: {e}")

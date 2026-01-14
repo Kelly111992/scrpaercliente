@@ -41,8 +41,12 @@ jobs:
       - name: Run Daily Scraper (Nuevos Leads)
         env:
           N8N_WEBHOOK_URL: ${{ secrets.N8N_WEBHOOK_URL }}
-          MAX_LEADS: '5'  # Máximo 5 leads nuevos por día
+          MAX_LEADS: '5'  # Máximo 5 leads con WhatsApp por día
           DELAY_MAX_MS: '5000'
+          # Evolution API para verificar WhatsApp antes de enviar
+          EVOLUTION_API_URL: 'https://evolutionapi-evolution-api.ckoomq.easypanel.host'
+          EVOLUTION_API_KEY: ${{ secrets.EVOLUTION_API_KEY }}
+          EVOLUTION_INSTANCE: 'claveai'
         run: |
           cd backend
           if [ -n "${{ github.event.inputs.day_override }}" ]; then
