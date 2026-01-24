@@ -10,6 +10,7 @@ import sys
 import json
 from datetime import datetime
 from dotenv import load_dotenv
+from supabase import create_client, Client
 
 load_dotenv()
 
@@ -492,6 +493,39 @@ class AutomatedScraper:
         self.evolution_url = os.getenv("EVOLUTION_API_URL", "https://evolutionapi-evolution-api.ckoomq.easypanel.host")
         self.evolution_key = os.getenv("EVOLUTION_API_KEY", "")
         self.evolution_instance = os.getenv("EVOLUTION_INSTANCE", "claveai")
+
+        # Supabase Config (Hardcoded for reliability based on auditing)
+        self.supabase_url = "https://kbdmbejefpldfjybusbd.supabase.co"
+        self.supabase_key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtiZG1iZWplZnBsZGZqeWJ1c2JkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc5MDUxMzEsImV4cCI6MjA4MzQ4MTEzMX0.425rGBN9Jw-OmFNDm5yflVZI9DUPmXffMHMTK9RfJIw"
+        try:
+            self.supabase: Client = create_client(self.supabase_url, self.supabase_key)
+            print("[SUPABASE] Lead tagging system initialized")
+        except Exception as e:
+            print(f"[WARN] Could not init Supabase: {e}")
+            self.supabase = None
+
+    def register_lead_in_supabase(self, lead):
+        """Register lead in Supabase contacts to track source"""
+        if not self.supabase: return
+        try:
+            # Convert lead niche to tag compatible string
+            niche_tag = lead.get("nicho", "unknown").replace("+", "_").replace(" ", "_")
+            
+            data = {
+                "id": lead["phone"],
+                "phone": lead["phone"],
+                "name": lead["lead_name"],
+                "company": lead["lead_name"],
+                "status": "online",
+                "tags": ["scraper", niche_tag], 
+                "notes": f"Scraped from Google Maps. Niche: {lead.get('nicho','')}. Map: {lead.get('google_maps_url','')}",
+                "last_seen": datetime.now().isoformat()
+            }
+            # Usar upsert para crear o actualizar
+            self.supabase.table("contacts").upsert(data).execute()
+            print(f"[SUPABASE] ✅ Tagged {lead['lead_name']} as 'scraper' source")
+        except Exception as e:
+            print(f"[SUPABASE] ⚠️ Error registering lead: {e}")
     
     async def check_whatsapp(self, phone: str) -> bool:
         """Verifica si un número tiene WhatsApp usando Evolution API"""
@@ -610,6 +644,11 @@ class AutomatedScraper:
                             self.tracker.add_contacted_leads(new_leads)
                             stats = self.tracker.get_stats()
                             print(f"[TRACKER] 📊 Total histórico de leads contactados: {stats['total_contacted']}")
+                            
+                            # Registrar en Supabase para tracking de clave-chat
+                            print(f"[SUPABASE] Syncing {len(new_leads)} leads to Dashboard...")
+                            for lead in new_leads:
+                                self.register_lead_in_supabase(lead)
                         
                         return response.status_code == 200
                     except httpx.TimeoutException as timeout_err:
