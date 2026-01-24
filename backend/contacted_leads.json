@@ -1,474 +1,106 @@
 {
   "phones": [
-    "523312733159",
-    "523331441586",
-    "523330313161",
-    "523310138089",
-    "523331156552",
-    "523311109441",
-    "523338284688",
-    "523330322116",
-    "523311962260",
-    "523318165093",
-    "523336822434",
-    "523338255715",
-    "523330335787",
-    "523316592096",
-    "523330124356",
-    "523331420537",
-    "523313849039",
-    "523315201744",
-    "523315220913",
-    "523310215632",
-    "523310581954",
-    "523310899718",
-    "523331498423",
-    "523314674027",
-    "523313540835",
-    "523321550497",
-    "523322234050",
-    "523316144174",
-    "523331161093",
-    "523318908638",
-    "523311497554",
-    "523336134946",
-    "523312196255",
-    "523334720731",
-    "523338073602",
-    "523325566627",
-    "523316086222",
-    "523313646910",
-    "523312177156",
-    "523328012199",
-    "523331849282",
-    "523333998991",
-    "523312976026",
-    "523323534740",
-    "523311739839",
-    "523330580754",
-    "523312515324",
-    "523318368040",
-    "523317282792",
-    "523334795620",
-    "523310691561",
-    "523320361889",
-    "523315454556",
-    "523328351789",
-    "523331212804",
-    "523333010412",
-    "523316147377",
-    "523317066593",
-    "523317138837",
-    "523311146744",
-    "523333162000",
-    "523314103011",
-    "523319418129",
-    "523331265442",
-    "523336143584",
-    "523336135200",
-    "523334153347",
-    "523339563894",
     "523396280001",
-    "523329672123",
-    "523321572983",
-    "523311118000",
-    "523310642772",
-    "523328158419",
     "523318953902",
-    "523322372569",
-    "523339562406",
-    "523311585883",
-    "523311775160",
-    "523310049060",
-    "523338174187",
-    "523311787539",
-    "523312785776",
-    "523317090307",
-    "523312481923",
-    "523318688086",
+    "523312177156",
+    "523319418129",
+    "523338255715",
+    "523336822434",
     "523338181818",
-    "523316353774"
+    "523312196255",
+    "523336135200",
+    "523323534740",
+    "523311775160",
+    "523315201744",
+    "523313646910",
+    "523311118000",
+    "523313233336",
+    "523311739839",
+    "523330322116",
+    "523331156552",
+    "523315220913",
+    "523311358566",
+    "523330124356",
+    "523333010412",
+    "523328158419",
+    "523331265442",
+    "523330335787",
+    "523310642772",
+    "523322372569",
+    "523310138089",
+    "523317090307",
+    "523315454556",
+    "523316144174",
+    "523318165093",
+    "523325566627",
+    "523314674027",
+    "523336134946",
+    "523330580754",
+    "523331441586",
+    "523310899718",
+    "523316592096",
+    "523338174187",
+    "523311146744",
+    "523339563894"
   ],
   "leads_data": {
     "523330322116": {
       "contact_date": "2026-01-14T15:58:38.897992",
       "lead_name": "Talentoz Dance Studio",
       "followup_message": "Hola de nuevo! Te contacté sobre Talentoz Dance Studio hace unos días. ¿Te interesaría un sistema de inscripción y pagos online?",
-      "followup_sent": true,
+      "followup_sent": false,
       "nicho": "escuela de baile"
     },
     "523313646910": {
       "contact_date": "2026-01-14T15:58:38.897992",
       "lead_name": "DANZISTICA Academia de baile",
       "followup_message": "Hola de nuevo! Te contacté sobre DANZISTICA Academia de baile hace unos días. ¿Te interesaría un sistema de inscripción y pagos online?",
-      "followup_sent": true,
+      "followup_sent": false,
       "nicho": "escuela de baile"
     },
     "523319418129": {
       "contact_date": "2026-01-14T16:22:07.766179",
       "lead_name": "ACADEMIA SPOT DANCE",
       "followup_message": "Hola de nuevo! Te contacté sobre ACADEMIA SPOT DANCE hace unos días. ¿Te interesaría un sistema de inscripción y pagos online?",
-      "followup_sent": true,
+      "followup_sent": false,
       "nicho": "escuela de baile"
     },
     "523310642772": {
       "contact_date": "2026-01-14T16:22:07.766179",
       "lead_name": "Baila Corazón",
       "followup_message": "Hola de nuevo! Te contacté sobre Baila Corazón hace unos días. ¿Te interesaría un sistema de inscripción y pagos online?",
-      "followup_sent": true,
+      "followup_sent": false,
       "nicho": "escuela de baile"
     },
     "523311118000": {
       "contact_date": "2026-01-14T16:31:18.484191",
       "lead_name": "Swip Studio",
       "followup_message": "Hola de nuevo! Te contacté sobre Swip Studio hace unos días. ¿Te interesaría un sistema de inscripción y pagos online?",
-      "followup_sent": true,
+      "followup_sent": false,
       "nicho": "escuela de baile"
     },
     "523318165093": {
       "contact_date": "2026-01-14T16:38:59.957216",
       "lead_name": "Salon51",
       "followup_message": "Hola de nuevo! Te contacté sobre Salon51 hace unos días. ¿Te interesaría un sistema de inscripción automatizado con IA?",
-      "followup_sent": true,
+      "followup_sent": false,
       "nicho": "escuela de baile"
     },
-    "523318908638": {
-      "contact_date": "2026-01-15T15:22:41.159402",
-      "lead_name": "Songwriters Escuela de Música",
-      "followup_message": "Hola! Te contacté hace días sobre Songwriters Escuela de Música. ¿Tienes 5 min para platicar sobre cómo la IA puede ayudarte?",
-      "followup_sent": true,
-      "nicho": "escuela de musica"
-    },
-    "523313540835": {
-      "contact_date": "2026-01-15T15:22:41.159402",
-      "lead_name": "Academia de Formación Artística Música Proyecta",
-      "followup_message": "Hola! Te contacté hace días sobre Academia de Formación Artística Música Proyecta. ¿Tienes 5 min para platicar sobre cómo la IA puede ayudarte?",
-      "followup_sent": true,
-      "nicho": "escuela de musica"
-    },
-    "523328012199": {
-      "contact_date": "2026-01-15T15:22:41.159402",
-      "lead_name": "Academia de Música Francisco Molina",
-      "followup_message": "Hola! Te contacté hace días sobre Academia de Música Francisco Molina. ¿Tienes 5 min para platicar sobre cómo la IA puede ayudarte?",
-      "followup_sent": true,
-      "nicho": "escuela de musica"
-    },
-    "523333998991": {
-      "contact_date": "2026-01-15T15:22:41.159402",
-      "lead_name": "Cantares Academias de Música y Canto",
-      "followup_message": "Hola! Te contacté hace días sobre Cantares Academias de Música y Canto. ¿Tienes 5 min para platicar sobre cómo la IA puede ayudarte?",
-      "followup_sent": true,
-      "nicho": "escuela de musica"
-    },
-    "523338073602": {
-      "contact_date": "2026-01-15T15:22:41.159402",
-      "lead_name": "Instituto de musica Harmonia 432",
-      "followup_message": "Hola! Te contacté hace días sobre Instituto de musica Harmonia 432. ¿Tienes 5 min para platicar sobre cómo la IA puede ayudarte?",
-      "followup_sent": true,
-      "nicho": "escuela de musica"
-    },
-    "523329672123": {
-      "contact_date": "2026-01-16T15:22:30.604842",
-      "lead_name": "Centro Joyero - Guadalajara - Fancy´s Fine Joyas",
-      "followup_message": "Hola! Te escribí sobre Centro Joyero - Guadalajara - Fancy´s Fine Joyas hace unos días. ¿Te gustaría ver ejemplos de catálogos con IA?",
-      "followup_sent": true,
-      "nicho": "joyeria"
-    },
-    "523311109441": {
-      "contact_date": "2026-01-16T15:22:30.604842",
-      "lead_name": "MAGALA Joyería Guadalajara",
-      "followup_message": "Hola! Te escribí sobre MAGALA Joyería Guadalajara hace unos días. ¿Te gustaría ver ejemplos de catálogos con IA?",
-      "followup_sent": true,
-      "nicho": "joyeria"
-    },
-    "523317138837": {
-      "contact_date": "2026-01-16T15:22:30.604842",
-      "lead_name": "Joyería Vazmar",
-      "followup_message": "Hola! Te escribí sobre Joyería Vazmar hace unos días. ¿Te gustaría ver ejemplos de catálogos con IA?",
-      "followup_sent": true,
-      "nicho": "joyeria"
-    },
-    "523322234050": {
-      "contact_date": "2026-01-16T15:22:30.604842",
-      "lead_name": "Flor de Luna Joyas",
-      "followup_message": "Hola! Te escribí sobre Flor de Luna Joyas hace unos días. ¿Te gustaría ver ejemplos de catálogos con IA?",
-      "followup_sent": true,
-      "nicho": "joyeria"
-    },
-    "523339562406": {
-      "contact_date": "2026-01-16T15:22:30.604842",
-      "lead_name": "Joyería Reyes GDL",
-      "followup_message": "Hola! Te escribí sobre Joyería Reyes GDL hace unos días. ¿Te gustaría ver ejemplos de catálogos con IA?",
-      "followup_sent": true,
-      "nicho": "joyeria"
-    },
-    "523310581954": {
-      "contact_date": "2026-01-17T15:18:38.598157",
-      "lead_name": "Mueblería San Pablo Forte",
-      "followup_message": "Hola de nuevo! Te contacté sobre Mueblería San Pablo Forte hace días. ¿Te interesaría un catálogo digital con IA?",
-      "followup_sent": true,
-      "nicho": "muebleria"
-    },
-    "523321572983": {
-      "contact_date": "2026-01-17T15:18:38.598157",
-      "lead_name": "Chiquillos",
-      "followup_message": "Hola de nuevo! Te contacté sobre Chiquillos hace días. ¿Te interesaría un catálogo digital con IA?",
-      "followup_sent": true,
-      "nicho": "muebleria"
-    },
-    "523311787539": {
-      "contact_date": "2026-01-17T15:18:38.598157",
-      "lead_name": "Mueblería Juan Pablo",
-      "followup_message": "Hola de nuevo! Te contacté sobre Mueblería Juan Pablo hace días. ¿Te interesaría un catálogo digital con IA?",
-      "followup_sent": true,
-      "nicho": "muebleria"
-    },
-    "523321550497": {
-      "contact_date": "2026-01-17T15:18:38.598157",
-      "lead_name": "Casa Maria Muebles",
-      "followup_message": "Hola de nuevo! Te contacté sobre Casa Maria Muebles hace días. ¿Te interesaría un catálogo digital con IA?",
-      "followup_sent": true,
-      "nicho": "muebleria"
-    },
-    "523316147377": {
-      "contact_date": "2026-01-17T15:18:38.598157",
-      "lead_name": "HAPPY HOUSE MUEBLES",
-      "followup_message": "Hola de nuevo! Te contacté sobre HAPPY HOUSE MUEBLES hace días. ¿Te interesaría un catálogo digital con IA?",
-      "followup_sent": true,
-      "nicho": "muebleria"
-    },
-    "523333162000": {
-      "contact_date": "2026-01-18T15:18:40.331891",
-      "lead_name": "PRO Ferreterías Moderna",
-      "followup_message": "Hola! Te escribí hace días sobre PRO Ferreterías Moderna. ¿Te gustaría que tus clientes consulten inventario con IA?",
-      "followup_sent": true,
-      "nicho": "ferreteria"
-    },
-    "523331212804": {
-      "contact_date": "2026-01-18T15:18:40.331891",
-      "lead_name": "Ferreterías del Bosque",
-      "followup_message": "Hola! Te escribí hace días sobre Ferreterías del Bosque. ¿Te gustaría que tus clientes consulten inventario con IA?",
-      "followup_sent": true,
-      "nicho": "ferreteria"
-    },
-    "523318368040": {
-      "contact_date": "2026-01-18T15:18:40.331891",
-      "lead_name": "Fix Ferreterías Guadalajara III La Paz",
-      "followup_message": "Hola! Te escribí hace días sobre Fix Ferreterías Guadalajara III La Paz. ¿Te gustaría que tus clientes consulten inventario con IA?",
-      "followup_sent": true,
-      "nicho": "ferreteria"
-    },
-    "523312785776": {
-      "contact_date": "2026-01-18T15:18:40.331891",
-      "lead_name": "SAN IGNACIO HARDWARE STORE",
-      "followup_message": "Hola! Te escribí hace días sobre SAN IGNACIO HARDWARE STORE. ¿Te gustaría que tus clientes consulten inventario con IA?",
-      "followup_sent": true,
-      "nicho": "ferreteria"
-    },
-    "523312976026": {
-      "contact_date": "2026-01-18T15:18:40.331891",
-      "lead_name": "Ferretería FerreMax San Isidro",
-      "followup_message": "Hola! Te escribí hace días sobre Ferretería FerreMax San Isidro. ¿Te gustaría que tus clientes consulten inventario con IA?",
-      "followup_sent": true,
-      "nicho": "ferreteria"
-    },
-    "523331498423": {
-      "contact_date": "2026-01-19T15:24:00.397435",
-      "lead_name": "Imprenta amplitud gráfica",
-      "followup_message": "Hola! Te escribí hace días sobre automatizar cotizaciones en Imprenta amplitud gráfica. ¿Te interesaría ver cómo funciona un cotizador con IA?",
-      "followup_sent": true,
-      "nicho": "imprenta"
-    },
-    "523336143584": {
-      "contact_date": "2026-01-19T15:24:00.397435",
-      "lead_name": "Fuzión Digital",
-      "followup_message": "Hola! Te escribí hace días sobre automatizar cotizaciones en Fuzión Digital. ¿Te interesaría ver cómo funciona un cotizador con IA?",
-      "followup_sent": true,
-      "nicho": "imprenta"
-    },
-    "523312481923": {
-      "contact_date": "2026-01-19T15:24:00.397435",
-      "lead_name": "Imprenta Española",
-      "followup_message": "Hola! Te escribí hace días sobre automatizar cotizaciones en Imprenta Española. ¿Te interesaría ver cómo funciona un cotizador con IA?",
-      "followup_sent": true,
-      "nicho": "imprenta"
-    },
-    "523330313161": {
-      "contact_date": "2026-01-19T15:24:00.397435",
-      "lead_name": "Impresos Guadalajara",
-      "followup_message": "Hola! Te escribí hace días sobre automatizar cotizaciones en Impresos Guadalajara. ¿Te interesaría ver cómo funciona un cotizador con IA?",
-      "followup_sent": true,
-      "nicho": "imprenta"
-    },
-    "523311585883": {
-      "contact_date": "2026-01-19T15:24:00.397435",
-      "lead_name": "OK Publicidad & imprenta Suc. Gigantes",
-      "followup_message": "Hola! Te escribí hace días sobre automatizar cotizaciones en OK Publicidad & imprenta Suc. Gigantes. ¿Te interesaría ver cómo funciona un cotizador con IA?",
-      "followup_sent": true,
-      "nicho": "imprenta"
-    },
-    "523317066593": {
-      "contact_date": "2026-01-20T15:29:26.339348",
-      "lead_name": "Clean Laundry Lavandería express",
-      "followup_message": "Hola! Te contacté sobre Clean Laundry Lavandería express hace unos días. ¿Te gustaría que tus clientes reciban avisos automáticos con IA?",
-      "followup_sent": true,
-      "nicho": "lavanderia"
-    },
-    "523310215632": {
-      "contact_date": "2026-01-20T15:29:26.339348",
-      "lead_name": "LAVANDERÍA LAVAEXPRESS",
-      "followup_message": "Hola! Te contacté sobre LAVANDERÍA LAVAEXPRESS hace unos días. ¿Te gustaría que tus clientes reciban avisos automáticos con IA?",
-      "followup_sent": true,
-      "nicho": "lavanderia"
-    },
-    "523331849282": {
-      "contact_date": "2026-01-20T15:29:26.339348",
-      "lead_name": "Lavandería a domicilio - LavadoPorEncargo",
-      "followup_message": "Hola! Te contacté sobre Lavandería a domicilio - LavadoPorEncargo hace unos días. ¿Te gustaría que tus clientes reciban avisos automáticos con IA?",
-      "followup_sent": true,
-      "nicho": "lavanderia"
-    },
-    "523334153347": {
-      "contact_date": "2026-01-20T15:29:26.339348",
-      "lead_name": "POWER WASH LAVANDERIAS",
-      "followup_message": "Hola! Te contacté sobre POWER WASH LAVANDERIAS hace unos días. ¿Te gustaría que tus clientes reciban avisos automáticos con IA?",
-      "followup_sent": true,
-      "nicho": "lavanderia"
-    },
-    "523316086222": {
-      "contact_date": "2026-01-20T15:29:26.339348",
-      "lead_name": "Centro Lavandería",
-      "followup_message": "Hola! Te contacté sobre Centro Lavandería hace unos días. ¿Te gustaría que tus clientes reciban avisos automáticos con IA?",
-      "followup_sent": true,
-      "nicho": "lavanderia"
-    },
-    "523338284688": {
-      "contact_date": "2026-01-21T15:29:10.374161",
-      "lead_name": "Chalé Spa",
-      "followup_message": "Hola de nuevo! Te escribí sobre Chalé Spa hace días. ¿Te interesaría un sistema de reservas con IA?",
+    "523313233336": {
+      "contact_date": "2026-01-14T16:48:40.053607",
+      "lead_name": "Baile Fitness",
+      "followup_message": "Hola de nuevo! Te contacté sobre Baile Fitness hace unos días. ¿Te interesaría un sistema de inscripción automatizado con IA?",
       "followup_sent": false,
-      "nicho": "spa"
+      "nicho": "escuela de baile"
     },
-    "523320361889": {
-      "contact_date": "2026-01-21T15:29:10.374161",
-      "lead_name": "Chandan spa",
-      "followup_message": "Hola de nuevo! Te escribí sobre Chandan spa hace días. ¿Te interesaría un sistema de reservas con IA?",
+    "523311358566": {
+      "contact_date": "2026-01-14T16:48:40.053607",
+      "lead_name": "Academia Xopoc",
+      "followup_message": "Hola de nuevo! Te contacté sobre Academia Xopoc hace unos días. ¿Te interesaría un sistema de inscripción automatizado con IA?",
       "followup_sent": false,
-      "nicho": "spa"
-    },
-    "523331161093": {
-      "contact_date": "2026-01-21T15:29:10.374161",
-      "lead_name": "Club Dilectus SPA",
-      "followup_message": "Hola de nuevo! Te escribí sobre Club Dilectus SPA hace días. ¿Te interesaría un sistema de reservas con IA?",
-      "followup_sent": false,
-      "nicho": "spa"
-    },
-    "523331420537": {
-      "contact_date": "2026-01-21T15:29:10.374161",
-      "lead_name": "Casa Bonné Spa",
-      "followup_message": "Hola de nuevo! Te escribí sobre Casa Bonné Spa hace días. ¿Te interesaría un sistema de reservas con IA?",
-      "followup_sent": false,
-      "nicho": "spa"
-    },
-    "523313849039": {
-      "contact_date": "2026-01-21T15:29:10.374161",
-      "lead_name": "Xhoola Spa Gdl",
-      "followup_message": "Hola de nuevo! Te escribí sobre Xhoola Spa Gdl hace días. ¿Te interesaría un sistema de reservas con IA?",
-      "followup_sent": false,
-      "nicho": "spa"
-    },
-    "523317282792": {
-      "contact_date": "2026-01-22T15:29:27.406810",
-      "lead_name": "Consultorio Médico 1262 (URGENCIAS 24hrs)",
-      "followup_message": "Hola! Te escribí sobre Consultorio Médico 1262 (URGENCIAS 24hrs) hace unos días. ¿Te gustaría que tus pacientes agenden con IA?",
-      "followup_sent": false,
-      "nicho": "consultorio medico"
-    },
-    "523310049060": {
-      "contact_date": "2026-01-22T15:29:27.406810",
-      "lead_name": "Consultorio médico Dr José Pedro García Vázquez Medicina General Humanista",
-      "followup_message": "Hola! Te escribí sobre Consultorio médico Dr José Pedro García Vázquez Medicina General Humanista hace unos días. ¿Te gustaría que tus pacientes agenden con IA?",
-      "followup_sent": false,
-      "nicho": "consultorio medico"
-    },
-    "523310691561": {
-      "contact_date": "2026-01-22T15:29:27.406810",
-      "lead_name": "Consultorio médico familiar Dra. Jesica Rios",
-      "followup_message": "Hola! Te escribí sobre Consultorio médico familiar Dra. Jesica Rios hace unos días. ¿Te gustaría que tus pacientes agenden con IA?",
-      "followup_sent": false,
-      "nicho": "consultorio medico"
-    },
-    "523311497554": {
-      "contact_date": "2026-01-23T15:22:58.440082",
-      "lead_name": "Salón de eventos ruby",
-      "followup_message": "Hola de nuevo! Te contacté sobre Salón de eventos ruby hace días. ¿Te interesaría una página web con cotizador IA?",
-      "followup_sent": false,
-      "nicho": "salon de eventos"
-    },
-    "523334795620": {
-      "contact_date": "2026-01-23T15:22:58.440082",
-      "lead_name": "La Valentina Salón de Eventos",
-      "followup_message": "Hola de nuevo! Te contacté sobre La Valentina Salón de Eventos hace días. ¿Te interesaría una página web con cotizador IA?",
-      "followup_sent": false,
-      "nicho": "salon de eventos"
-    },
-    "523334720731": {
-      "contact_date": "2026-01-23T15:22:58.440082",
-      "lead_name": "Jardín de Eventos Petit",
-      "followup_message": "Hola de nuevo! Te contacté sobre Jardín de Eventos Petit hace días. ¿Te interesaría una página web con cotizador IA?",
-      "followup_sent": false,
-      "nicho": "salon de eventos"
-    },
-    "523312515324": {
-      "contact_date": "2026-01-23T15:22:58.440082",
-      "lead_name": "Terraza Evelia (Salon de Eventos & Terraza)",
-      "followup_message": "Hola de nuevo! Te contacté sobre Terraza Evelia (Salon de Eventos & Terraza) hace días. ¿Te interesaría una página web con cotizador IA?",
-      "followup_sent": false,
-      "nicho": "salon de eventos"
-    },
-    "523318688086": {
-      "contact_date": "2026-01-23T15:22:58.440082",
-      "lead_name": "Colibrí Eventos Terraza",
-      "followup_message": "Hola de nuevo! Te contacté sobre Colibrí Eventos Terraza hace días. ¿Te interesaría una página web con cotizador IA?",
-      "followup_sent": false,
-      "nicho": "salon de eventos"
-    },
-    "523312733159": {
-      "contact_date": "2026-01-24T15:18:23.810089",
-      "lead_name": "Escuela de Manejo Conduse",
-      "followup_message": "Hola! Te escribí hace días sobre Escuela de Manejo Conduse. ¿Te gustaría un sistema de inscripción con IA?",
-      "followup_sent": false,
-      "nicho": "escuela de manejo"
-    },
-    "523316353774": {
-      "contact_date": "2026-01-24T15:18:23.810089",
-      "lead_name": "Escuela de Manejo en Guadalajara",
-      "followup_message": "Hola! Te escribí hace días sobre Escuela de Manejo en Guadalajara. ¿Te gustaría un sistema de inscripción con IA?",
-      "followup_sent": false,
-      "nicho": "escuela de manejo"
-    },
-    "523314103011": {
-      "contact_date": "2026-01-24T15:18:23.810089",
-      "lead_name": "Escuela De Manejo Américas",
-      "followup_message": "Hola! Te escribí hace días sobre Escuela De Manejo Américas. ¿Te gustaría un sistema de inscripción con IA?",
-      "followup_sent": false,
-      "nicho": "escuela de manejo"
-    },
-    "523328351789": {
-      "contact_date": "2026-01-24T15:18:23.810089",
-      "lead_name": "Driving School VERTIZ - Valle Real",
-      "followup_message": "Hola! Te escribí hace días sobre Driving School VERTIZ - Valle Real. ¿Te gustaría un sistema de inscripción con IA?",
-      "followup_sent": false,
-      "nicho": "escuela de manejo"
-    },
-    "523311962260": {
-      "contact_date": "2026-01-24T15:18:23.810089",
-      "lead_name": "Escuela de Manejo Elitte",
-      "followup_message": "Hola! Te escribí hace días sobre Escuela de Manejo Elitte. ¿Te gustaría un sistema de inscripción con IA?",
-      "followup_sent": false,
-      "nicho": "escuela de manejo"
+      "nicho": "escuela de baile"
     }
   },
-  "total_count": 88,
-  "last_updated": "2026-01-24T15:18:24.647761"
+  "total_count": 42,
+  "last_updated": "2026-01-14T16:48:40.053629"
 }

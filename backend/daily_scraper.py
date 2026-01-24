@@ -14,176 +14,242 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # =============================================================================
-# 28 NICHOS - Rotación por semana del mes (1-4) y día de la semana (0-6)
+# 10 NICHOS DE ALTO VALOR - Rotación por día de la semana (lunes a viernes)
+# Cada semana se repiten los mismos nichos para mayor frecuencia de contacto
 # =============================================================================
 NICHOS = {
-    # SEMANA 1 (días 1-7 del mes)
-    (1, 0): "veterinaria",
-    (1, 1): "escuela+de+idiomas",
-    (1, 2): "restaurante",
-    (1, 3): "cafeteria",
-    (1, 4): "estudio+de+fotografia",
-    (1, 5): "floristeria",
-    (1, 6): "taller+mecanico",
-    
-    # SEMANA 2 (días 8-14 del mes)
-    (2, 0): "cerrajeria",
-    (2, 1): "agencia+de+viajes",
-    (2, 2): "escuela+de+baile",
-    (2, 3): "tienda+de+mascotas",
-    (2, 4): "optica",
-    (2, 5): "farmacia",
-    (2, 6): "papeleria",
-    
-    # SEMANA 3 (días 15-21 del mes)
-    (3, 0): "imprenta",
-    (3, 1): "lavanderia",
-    (3, 2): "spa",
-    (3, 3): "escuela+de+musica",
-    (3, 4): "joyeria",
-    (3, 5): "muebleria",
-    (3, 6): "ferreteria",
-    
-    # SEMANA 4 (días 22-31 del mes)
+    # Todos los días de todas las semanas usan los mismos 10 nichos TOP
+    # Lunes
+    (1, 0): "clinica+dental",
+    (2, 0): "clinica+dental",
+    (3, 0): "clinica+dental",
     (4, 0): "clinica+dental",
-    (4, 1): "nutriologo",
-    (4, 2): "fisioterapia",
-    (4, 3): "consultorio+medico",
-    (4, 4): "salon+de+eventos",
-    (4, 5): "escuela+de+manejo",
-    (4, 6): "agencia+de+seguros",
+    
+    # Martes
+    (1, 1): "veterinaria",
+    (2, 1): "veterinaria",
+    (3, 1): "veterinaria",
+    (4, 1): "veterinaria",
+    
+    # Miércoles
+    (1, 2): "spa",
+    (2, 2): "spa",
+    (3, 2): "spa",
+    (4, 2): "spa",
+    
+    # Jueves
+    (1, 3): "gimnasio",
+    (2, 3): "gimnasio",
+    (3, 3): "gimnasio",
+    (4, 3): "gimnasio",
+    
+    # Viernes
+    (1, 4): "escuela+de+idiomas",
+    (2, 4): "escuela+de+idiomas",
+    (3, 4): "escuela+de+idiomas",
+    (4, 4): "escuela+de+idiomas",
+    
+    # Sábado
+    (1, 5): "consultorio+medico",
+    (2, 5): "consultorio+medico",
+    (3, 5): "consultorio+medico",
+    (4, 5): "consultorio+medico",
+    
+    # Domingo
+    (1, 6): "taller+mecanico",
+    (2, 6): "taller+mecanico",
+    (3, 6): "taller+mecanico",
+    (4, 6): "taller+mecanico",
 }
 
 # =============================================================================
-# MENSAJES PERSONALIZADOS POR NICHO - Cada uno termina con pregunta abierta
-# Mencionamos que somos empresa de IA para dar contexto de solución escalable
+# MENSAJES HUMANIZADOS POR NICHO - Con valor inmediato y pregunta que ENGANCHA
+# Tono conversacional, como si escribiera una persona real, no un bot
 # =============================================================================
 MENSAJES_POR_NICHO = {
-    # SEMANA 1
-    "veterinaria": {
-        "mensaje": "Qué tal! Vi tu veterinaria {nombre} en Google Maps.\nSoy de CLAVE.AI, una empresa de inteligencia artificial que automatiza negocios.\nCreamos sistemas de recordatorios de citas y vacunas con IA.\n¿Actualmente cómo le haces para recordarle a tus clientes sus citas? 🐾",
-        "followup": "Hola de nuevo! Te escribí hace unos días sobre automatizar {nombre} con IA.\n¿Te gustaría que te muestre cómo funciona en 5 min? Sin compromiso 👍"
-    },
-    "escuela+de+idiomas": {
-        "mensaje": "Qué tal! Vi tu escuela {nombre} buscando negocios en la zona.\nSoy de CLAVE.AI, usamos inteligencia artificial para automatizar negocios.\nAyudamos a escuelas a conseguir más alumnos con seguimiento inteligente.\n¿Cómo consigues nuevos estudiantes actualmente? 📚",
-        "followup": "Hola! Te contacté hace unos días sobre {nombre}.\n¿Tienes 5 min para platicar cómo la IA podría ayudarte a conseguir más alumnos?"
-    },
-    "restaurante": {
-        "mensaje": "Qué tal! Vi tu restaurante {nombre} en Maps.\nSoy de CLAVE.AI, automatizamos negocios con inteligencia artificial.\nHacemos menús digitales, reservas y pedidos con IA integrada.\n¿Ya tienes menú con QR o sistema de pedidos? 🍽️",
-        "followup": "Hola! Te escribí hace unos días sobre {nombre}.\n¿Te interesaría un sistema de pedidos con IA? Puedo mostrarte ejemplos rápido."
-    },
-    "cafeteria": {
-        "mensaje": "Qué tal! Vi tu cafetería {nombre} en Google Maps.\nSoy de CLAVE.AI, usamos inteligencia artificial para automatizar negocios.\nCreamos programas de lealtad inteligentes y pedidos automatizados.\n¿Tienes algún sistema de puntos para clientes frecuentes? ☕",
-        "followup": "Hola de nuevo! Te contacté sobre {nombre} hace unos días.\n¿Te gustaría ver cómo funciona un programa de lealtad con IA?"
-    },
-    "estudio+de+fotografia": {
-        "mensaje": "Qué tal! Vi tu estudio {nombre} buscando fotógrafos en la zona.\nSoy de CLAVE.AI, empresa de inteligencia artificial para negocios.\nHacemos portafolios web y sistemas de reserva inteligentes.\n¿Cómo muestras tu trabajo a clientes nuevos actualmente? 📸",
-        "followup": "Hola! Te escribí hace unos días sobre crear un portafolio web para {nombre}.\n¿Tienes 5 min para que te muestre algunos ejemplos?"
-    },
-    "floristeria": {
-        "mensaje": "Qué tal! Vi tu florería {nombre} en Maps.\nSoy de CLAVE.AI, automatizamos negocios con inteligencia artificial.\nCreamos catálogos digitales y pedidos por WhatsApp automatizados.\n¿Cómo reciben pedidos actualmente, solo llamada o también WhatsApp? 💐",
-        "followup": "Hola! Te contacté sobre {nombre} hace unos días.\n¿Te interesa ver cómo automatizar pedidos con IA?"
-    },
-    "taller+mecanico": {
-        "mensaje": "Qué tal! Vi tu taller {nombre} en Google Maps.\nSoy de CLAVE.AI, usamos inteligencia artificial para automatizar negocios.\nHacemos sistemas de citas y recordatorios de servicio inteligentes.\n¿Cómo le haces para que tus clientes regresen a su próximo servicio? 🔧",
-        "followup": "Hola de nuevo! Te escribí sobre {nombre} hace unos días.\n¿Te gustaría ver cómo funcionan los recordatorios automáticos con IA?"
-    },
-    
-    # SEMANA 2
-    "cerrajeria": {
-        "mensaje": "Qué tal! Vi tu cerrajería {nombre} en Maps.\nSoy de CLAVE.AI, empresa de inteligencia artificial para negocios.\nHacemos páginas web con llamada directa y ubicación optimizada.\n¿La mayoría de tus clientes te encuentran por Google o por recomendación? 🔑",
-        "followup": "Hola! Te contacté hace unos días sobre {nombre}.\n¿Te interesaría aparecer mejor en Google con ayuda de IA?"
-    },
-    "agencia+de+viajes": {
-        "mensaje": "Qué tal! Vi tu agencia {nombre} buscando negocios en la zona.\nSoy de CLAVE.AI, automatizamos negocios con inteligencia artificial.\nCreamos seguimiento automático de clientes con IA.\n¿Cómo le das seguimiento a la gente que pregunta pero no compra de inmediato? ✈️",
-        "followup": "Hola! Te escribí hace días sobre automatizar seguimiento en {nombre} con IA.\n¿Tienes 5 min para platicar?"
-    },
-    "escuela+de+baile": {
-        "mensaje": "Qué tal! Vi tu escuela {nombre} en Google Maps.\nSoy de CLAVE.AI, usamos inteligencia artificial para automatizar negocios.\nHacemos sistemas de inscripción y recordatorios inteligentes.\n¿Cómo manejan las inscripciones actualmente, presencial o tienen algo online? 💃",
-        "followup": "Hola de nuevo! Te contacté sobre {nombre} hace unos días.\n¿Te interesaría un sistema de inscripción automatizado con IA?"
-    },
-    "tienda+de+mascotas": {
-        "mensaje": "Qué tal! Vi tu tienda {nombre} en Maps.\nSoy de CLAVE.AI, empresa de inteligencia artificial para negocios.\nHacemos tiendas online con recordatorios de compra inteligentes.\n¿Tus clientes pueden comprarte por WhatsApp o solo en tienda? 🐕",
-        "followup": "Hola! Te escribí sobre {nombre} hace unos días.\n¿Te gustaría ver cómo funciona una tienda con IA integrada?"
-    },
-    "optica": {
-        "mensaje": "Qué tal! Vi tu óptica {nombre} buscando negocios en la zona.\nSoy de CLAVE.AI, automatizamos negocios con inteligencia artificial.\nCreamos sistemas de citas y recordatorios de revisión con IA.\n¿Cómo agendan citas tus clientes actualmente? 👓",
-        "followup": "Hola! Te contacté hace días sobre automatizar citas en {nombre}.\n¿Tienes 5 min para que te cuente cómo funciona la IA?"
-    },
-    "farmacia": {
-        "mensaje": "Qué tal! Vi tu farmacia {nombre} en Google Maps.\nSoy de CLAVE.AI, usamos inteligencia artificial para automatizar negocios.\nHacemos catálogos digitales y pedidos automatizados.\n¿Hacen entregas a domicilio o solo venta en mostrador? 💊",
-        "followup": "Hola! Te escribí sobre {nombre} hace unos días.\n¿Te interesaría automatizar pedidos y entregas con IA?"
-    },
-    "papeleria": {
-        "mensaje": "Qué tal! Vi tu papelería {nombre} en Maps.\nSoy de CLAVE.AI, empresa de inteligencia artificial para negocios.\nCreamos catálogos online y pedidos automatizados.\n¿Tus clientes pueden ver qué productos tienes antes de ir a la tienda? 📎",
-        "followup": "Hola de nuevo! Te contacté sobre {nombre} hace días.\n¿Te gustaría un catálogo digital inteligente?"
-    },
-    
-    # SEMANA 3
-    "imprenta": {
-        "mensaje": "Qué tal! Vi tu imprenta {nombre} buscando negocios en la zona.\nSoy de CLAVE.AI, automatizamos negocios con inteligencia artificial.\nHacemos cotizadores automáticos con IA para imprentas.\n¿Cómo reciben las solicitudes de cotización actualmente? 🖨️",
-        "followup": "Hola! Te escribí hace días sobre automatizar cotizaciones en {nombre}.\n¿Te interesaría ver cómo funciona un cotizador con IA?"
-    },
-    "lavanderia": {
-        "mensaje": "Qué tal! Vi tu lavandería {nombre} en Google Maps.\nSoy de CLAVE.AI, usamos inteligencia artificial para automatizar negocios.\nCreamos sistemas de seguimiento y notificaciones inteligentes.\n¿Tus clientes pueden saber cuándo está lista su ropa sin llamar? 🧺",
-        "followup": "Hola! Te contacté sobre {nombre} hace unos días.\n¿Te gustaría que tus clientes reciban avisos automáticos con IA?"
-    },
-    "spa": {
-        "mensaje": "Qué tal! Vi tu spa {nombre} en Maps.\nSoy de CLAVE.AI, empresa de inteligencia artificial para negocios.\nHacemos sistemas de reservas y recordatorios inteligentes.\n¿Cómo agendan citas tus clientes, por llamada o WhatsApp? 💆",
-        "followup": "Hola de nuevo! Te escribí sobre {nombre} hace días.\n¿Te interesaría un sistema de reservas con IA?"
-    },
-    "escuela+de+musica": {
-        "mensaje": "Qué tal! Vi tu escuela {nombre} buscando negocios en la zona.\nSoy de CLAVE.AI, automatizamos negocios con inteligencia artificial.\nCreamos sistemas de inscripción y seguimiento de alumnos.\n¿Cómo consigues nuevos alumnos actualmente? 🎸",
-        "followup": "Hola! Te contacté hace días sobre {nombre}.\n¿Tienes 5 min para platicar sobre cómo la IA puede ayudarte?"
-    },
-    "joyeria": {
-        "mensaje": "Qué tal! Vi tu joyería {nombre} en Google Maps.\nSoy de CLAVE.AI, usamos inteligencia artificial para automatizar negocios.\nHacemos catálogos digitales elegantes y tiendas online.\n¿Tus clientes pueden ver tu catálogo completo online? 💎",
-        "followup": "Hola! Te escribí sobre {nombre} hace unos días.\n¿Te gustaría ver ejemplos de catálogos con IA?"
-    },
-    "muebleria": {
-        "mensaje": "Qué tal! Vi tu mueblería {nombre} en Maps.\nSoy de CLAVE.AI, empresa de inteligencia artificial para negocios.\nCreamos catálogos digitales y cotizadores inteligentes.\n¿Tus clientes pueden ver tus muebles online antes de visitarte? 🛋️",
-        "followup": "Hola de nuevo! Te contacté sobre {nombre} hace días.\n¿Te interesaría un catálogo digital con IA?"
-    },
-    "ferreteria": {
-        "mensaje": "Qué tal! Vi tu ferretería {nombre} buscando negocios en la zona.\nSoy de CLAVE.AI, automatizamos negocios con inteligencia artificial.\nHacemos catálogos digitales y pedidos automatizados.\n¿Tus clientes pueden consultar si tienes un producto antes de ir? 🔨",
-        "followup": "Hola! Te escribí hace días sobre {nombre}.\n¿Te gustaría que tus clientes consulten inventario con IA?"
-    },
-    
-    # SEMANA 4
+    # CLÍNICA DENTAL - Alto ticket, necesitan recordatorios
     "clinica+dental": {
-        "mensaje": "Qué tal! Vi tu clínica {nombre} en Google Maps.\nSoy de CLAVE.AI, usamos inteligencia artificial para automatizar negocios.\nCreamos sistemas de citas y recordatorios inteligentes.\n¿Cómo agendan citas tus pacientes actualmente? 🦷",
-        "followup": "Hola! Te contacté hace días sobre {nombre}.\n¿Te interesaría automatizar recordatorios con IA?"
+        "mensaje": """Hola! 👋 Me topé con {nombre} buscando dentistas en GDL.
+
+Vi que hacen tratamientos largos (ortodoncia, implantes) y se me ocurrió:
+¿No les pasa que los pacientes cancelan citas de último momento? 🦷
+
+Te pregunto porque ayudamos a clínicas a reducir eso en un 40%.
+Si te interesa, te mando un PDF gratis con 3 técnicas que usan otras clínicas.""",
+        "followup": """Hola! Pasando a saludar 👋
+
+Te escribí hace poco sobre {nombre}.
+Por cierto, te comparto un tip: los recordatorios 24 hrs antes + 2 hrs antes reducen cancelaciones un 40%.
+
+¿Te gustaría que te cuente cómo lo automatizamos? Sin compromiso""",
+        "leadmagnet": "PDF: 3 técnicas para reducir cancelaciones en clínicas dentales"
     },
-    "nutriologo": {
-        "mensaje": "Qué tal! Vi tu consultorio {nombre} en Maps.\nSoy de CLAVE.AI, empresa de inteligencia artificial para negocios.\nHacemos sistemas de citas y seguimiento de pacientes con IA.\n¿Cómo le das seguimiento a tus pacientes entre consultas? 🥗",
-        "followup": "Hola de nuevo! Te escribí sobre {nombre} hace días.\n¿Te gustaría ver cómo automatizar seguimiento con IA?"
+    
+    # VETERINARIA - Vacunas recurrentes = automatización
+    "veterinaria": {
+        "mensaje": """Hola! 👋 Me encontré con {nombre} buscando veterinarias.
+
+Tengo curiosidad: ¿les pasa que los dueños olvidan las vacunas de sus mascotas? 🐕
+
+Pregunto porque automatizamos recordatorios por WhatsApp para veterinarias.
+Si quieres te mando una plantilla GRATIS de recordatorio de vacunas que puedes usar ya.""",
+        "followup": """Hola de nuevo! 
+
+Te envío la plantilla de recordatorios que te mencioné para {nombre}.
+Es gratis, úsala como quieras 👍
+
+¿Te gustaría ver cómo automatizar estos envíos? Te lo muestro en 5 min""",
+        "leadmagnet": "Plantilla de recordatorios de vacunas por WhatsApp"
     },
-    "fisioterapia": {
-        "mensaje": "Qué tal! Vi tu clínica {nombre} buscando negocios en la zona.\nSoy de CLAVE.AI, automatizamos negocios con inteligencia artificial.\nCreamos sistemas de citas y seguimiento de tratamientos.\n¿Cómo agendan sus sesiones tus pacientes? 💪",
-        "followup": "Hola! Te contacté hace días sobre {nombre}.\n¿Te interesaría un sistema de citas con IA?"
+    
+    # SPA - Citas + productos = CRM simple  
+    "spa": {
+        "mensaje": """Hola! 👋 Vi tu spa {nombre} buscando lugares en la zona.
+
+Pregunta rápida: ¿tus clientas pueden agendar cita desde su WhatsApp o tienen que llamar? 💆
+
+Te lo pregunto porque muchos spas pierden citas porque la gente no quiere llamar.
+Si te sirve, te paso gratis una guía de cómo otros spas manejan reservas por WhatsApp.""",
+        "followup": """Hola! Pasando a saludar 👋
+
+¿Viste la guía que te mandé sobre reservas para {nombre}?
+Varios spas la están usando y les funciona muy bien.
+
+Si quieres te cuento cómo automatizarlo en 5 min""",
+        "leadmagnet": "Guía: Cómo manejar reservas de spa por WhatsApp"
     },
+    
+    # GIMNASIO - Membresías + leads = sistema
+    "gimnasio": {
+        "mensaje": """Hola! 👋 Me topé con {nombre} buscando gimnasios.
+
+Pregunta rápida: ¿qué hacen cuando alguien pregunta precios pero no se inscribe? 🏋️
+
+Muchos gyms pierden 50% de prospectos porque no les dan seguimiento.
+Te puedo pasar gratis un guión de seguimiento que funciona muy bien.""",
+        "followup": """Hola! Pasando a darte seguimiento 👋
+
+¿Recibiste el guión de seguimiento para {nombre}?
+Varios gimnasios lo usan y les ayuda a convertir más prospectos.
+
+¿Te gustaría automatizar este proceso? Te lo cuento en 5 min""",
+        "leadmagnet": "Guión de seguimiento para prospectos de gimnasio"
+    },
+    
+    # ESCUELA DE IDIOMAS - Inscripciones = funnel
+    "escuela+de+idiomas": {
+        "mensaje": """Hola! 👋 Vi tu escuela {nombre} buscando opciones en GDL.
+
+Curiosidad: ¿cómo le hacen cuando alguien pregunta por clases pero no se decide? 📚
+
+Muchas escuelas pierden alumnos porque no les dan seguimiento.
+Te puedo pasar gratis un funnel de captación que usan otras escuelas.""",
+        "followup": """Hola! Saludos desde CLAVE.AI 👋
+
+¿Viste el funnel que te compartí para {nombre}?
+Varias escuelas lo usan para convertir más prospectos.
+
+Si quieres te cuento cómo automatizarlo en 5 min""",
+        "leadmagnet": "Funnel de captación de alumnos para escuelas de idiomas"
+    },
+    
+    # CONSULTORIO MÉDICO - Agenda + recordatorios
     "consultorio+medico": {
-        "mensaje": "Qué tal! Vi tu consultorio {nombre} en Google Maps.\nSoy de CLAVE.AI, usamos inteligencia artificial para automatizar negocios.\nHacemos sistemas de citas online y recordatorios inteligentes.\n¿Tus pacientes pueden agendar cita online o solo por teléfono? 🏥",
-        "followup": "Hola! Te escribí sobre {nombre} hace unos días.\n¿Te gustaría que tus pacientes agenden con IA?"
+        "mensaje": """Hola! 👋 Me topé con {nombre} buscando consultorios.
+
+Pregunta directa: ¿les pasa que los pacientes no llegan a su cita? 🏥
+
+Es súper común. Los que mandan recordatorio automático reducen faltas en 35%.
+Te puedo pasar gratis una guía de recordatorios que usan otros consultorios.""",
+        "followup": """Hola! Pasando a saludar 👋
+
+¿Revisaste la guía de recordatorios que te mandé para {nombre}?
+Es de las cosas que más impacto tienen en la agenda.
+
+¿Te gustaría ver cómo automatizarlo? Te lo muestro en 5 min""",
+        "leadmagnet": "Guía de recordatorios automáticos para consultorios"
     },
-    "salon+de+eventos": {
-        "mensaje": "Qué tal! Vi tu salón {nombre} en Maps.\nSoy de CLAVE.AI, empresa de inteligencia artificial para negocios.\nCreamos páginas web con galería y cotizadores inteligentes.\n¿Cómo muestras tus espacios a clientes que preguntan? 🎉",
-        "followup": "Hola de nuevo! Te contacté sobre {nombre} hace días.\n¿Te interesaría una página web con cotizador IA?"
+    
+    # TALLER MECÁNICO - Servicios recurrentes
+    "taller+mecanico": {
+        "mensaje": """Hola! 👋 Vi tu taller {nombre} buscando mecánicos en la zona.
+
+Pregunta: ¿cómo le hacen para que los clientes regresen a su próximo servicio? 🔧
+
+Muchos talleres pierden clientes porque no les recuerdan cuándo toca cambio de aceite.
+Te puedo pasar gratis una plantilla de recordatorios que usan otros talleres.""",
+        "followup": """Hola de nuevo! 👋
+
+¿Usaste la plantilla que te mandé para {nombre}?
+Varios talleres la usan y les ayuda a tener clientes de vuelta.
+
+¿Te gustaría automatizar esto? Te lo cuento en 5 min""",
+        "leadmagnet": "Plantilla de recordatorios de servicio para talleres"
     },
-    "escuela+de+manejo": {
-        "mensaje": "Qué tal! Vi tu escuela {nombre} buscando negocios en la zona.\nSoy de CLAVE.AI, automatizamos negocios con inteligencia artificial.\nHacemos sistemas de inscripción y seguimiento inteligentes.\n¿Cómo se inscriben tus alumnos actualmente? 🚗",
-        "followup": "Hola! Te escribí hace días sobre {nombre}.\n¿Te gustaría un sistema de inscripción con IA?"
+    
+    # Nichos adicionales para completar rotación
+    "restaurante": {
+        "mensaje": """Hola! 👋 Me topé con {nombre} buscando restaurantes.
+
+Pregunta rápida: ¿tienen sistema de reservas o la gente llama directamente? 🍽️
+
+Muchos restaurantes pierden mesas porque la gente no quiere llamar.
+Te paso gratis una guía de cómo otros restaurantes manejan reservas por WhatsApp.""",
+        "followup": """Hola! Saludos 👋
+
+¿Viste la guía de reservas para {nombre}?
+Varios restaurantes la usan y les funciona bien.
+
+¿Te cuento cómo automatizarlo? Son 5 min""",
+        "leadmagnet": "Guía de reservas por WhatsApp para restaurantes"
     },
-    "agencia+de+seguros": {
-        "mensaje": "Qué tal! Vi tu agencia {nombre} en Google Maps.\nSoy de CLAVE.AI, usamos inteligencia artificial para automatizar negocios.\nCreamos sistemas de seguimiento y cotizadores con IA.\n¿Cómo le das seguimiento a tus prospectos actualmente? 📋",
-        "followup": "Hola! Te contacté sobre {nombre} hace unos días.\n¿Te interesaría automatizar el seguimiento con IA?"
+    
+    "estudio+de+fotografia": {
+        "mensaje": """Hola! 👋 Vi tu estudio {nombre} buscando fotógrafos.
+
+Pregunta: ¿cómo muestras tu portafolio cuando alguien te pregunta? 📸
+
+Muchos fotógrafos usan solo Instagram pero pierden clientes que quieren ver más.
+Te puedo pasar gratis tips para armar un portafolio que convierta.""",
+        "followup": """Hola de nuevo! 👋
+
+¿Te sirvieron los tips de portafolio para {nombre}?
+Varios fotógrafos los usan y les funciona.
+
+¿Te gustaría ver cómo armar una página web con IA? Te cuento en 5 min""",
+        "leadmagnet": "Tips para crear un portafolio de fotografía que convierta"
+    },
+    
+    "salon+de+belleza": {
+        "mensaje": """Hola! 👋 Me encontré con {nombre} buscando salones.
+
+Pregunta rápida: ¿tus clientas pueden agendar cita desde WhatsApp? 💇
+
+Muchos salones pierden citas porque la gente no quiere llamar.
+Te paso gratis una guía de cómo otros salones manejan citas por WhatsApp.""",
+        "followup": """Hola! Saludos 👋
+
+¿Viste la guía de citas para {nombre}?
+Varios salones la usan y les funciona muy bien.
+
+¿Te cuento cómo automatizarlo? Son solo 5 min""",
+        "leadmagnet": "Guía de citas por WhatsApp para salones de belleza"
     },
 }
 
-# Mensaje genérico de respaldo
+# Mensaje genérico de respaldo - Tono humano
 MENSAJE_DEFAULT = {
-    "mensaje": "Qué tal! Encontré {nombre} buscando negocios en la zona.\nSoy de CLAVE.AI, una empresa de inteligencia artificial que automatiza negocios.\nCreamos soluciones digitales escalables para negocios locales.\n¿Cómo consigues clientes nuevos actualmente? 🚀",
-    "followup": "Hola! Te escribí hace unos días sobre {nombre}.\nSomos CLAVE.AI, ¿tienes 5 min para platicar? Sin compromiso 👍"
+    "mensaje": """Hola! 👋 Me topé con {nombre} buscando negocios en la zona.
+
+Pregunta rápida: ¿cómo manejan actualmente la comunicación con sus clientes? 
+
+Muchos negocios pierden clientes porque no les dan seguimiento.
+Si te interesa, te paso gratis tips que usan otros negocios para mejorar eso.""",
+    "followup": """Hola! Pasando a saludar 👋
+
+¿Viste los tips que te mandé para {nombre}?
+Si quieres te cuento cómo automatizarlo. Son solo 5 min, sin compromiso""",
+    "leadmagnet": "Tips de seguimiento de clientes para negocios"
 }
 
 # =============================================================================
