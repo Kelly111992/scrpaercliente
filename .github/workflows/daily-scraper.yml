@@ -34,19 +34,18 @@ jobs:
       - name: Install dependencies
         run: |
           cd backend
-          pip install playwright httpx python-dotenv openai pandas
+          pip install playwright httpx python-dotenv openai pandas supabase
           playwright install chromium
           playwright install-deps
 
       - name: Run Daily Scraper (Nuevos Leads)
         env:
-          N8N_WEBHOOK_URL: ${{ secrets.N8N_WEBHOOK_URL }}
-          MAX_LEADS: '5'  # Máximo 5 leads con WhatsApp por día
-          DELAY_MAX_MS: '5000'
-          # Evolution API para verificar WhatsApp antes de enviar
+          # Evolution API para envío directo de WhatsApp (sin n8n)
           EVOLUTION_API_URL: 'https://evolutionapi-evolution-api.ckoomq.easypanel.host'
           EVOLUTION_API_KEY: ${{ secrets.EVOLUTION_API_KEY }}
-          EVOLUTION_INSTANCE: 'claveai'
+          EVOLUTION_INSTANCE_NAME: 'claveai'
+          MAX_LEADS: '5'  # Máximo 5 leads con WhatsApp por día
+          DELAY_MAX_MS: '5000'
         run: |
           cd backend
           if [ -n "${{ github.event.inputs.day_override }}" ]; then
@@ -55,9 +54,12 @@ jobs:
             python daily_scraper.py
           fi
 
-      - name: Send Follow-ups (Leads de hace 3 días)
+      - name: Send Follow-ups (Leads de días anteriores)
         env:
-          N8N_WEBHOOK_URL: ${{ secrets.N8N_WEBHOOK_URL }}
+          # Evolution API para envío directo de follow-ups
+          EVOLUTION_API_URL: 'https://evolutionapi-evolution-api.ckoomq.easypanel.host'
+          EVOLUTION_API_KEY: ${{ secrets.EVOLUTION_API_KEY }}
+          EVOLUTION_INSTANCE_NAME: 'claveai'
         run: |
           cd backend
           python send_followups.py
@@ -73,3 +75,4 @@ jobs:
             git diff --cached --quiet || git commit -m "🤖 Update contacted leads tracking [skip ci]"
             git push
           fi
+
