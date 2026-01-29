@@ -107,7 +107,7 @@ export default function Home() {
       <div className="max-w-6xl mx-auto">
         <header className="mb-12 text-center">
           <h1 className="text-5xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-500">
-            G-Maps Lead Extractor
+            G-Maps Lead Extractor v2.0
           </h1>
           <p className="text-slate-400 text-lg">Local tool for targeted business discovery</p>
         </header>

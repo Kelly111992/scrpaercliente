@@ -76,11 +76,15 @@ Vi que hacen tratamientos largos (ortodoncia, implantes) y se me ocurrió:
 ¿No les pasa que los pacientes cancelan citas de último momento? 🦷
 
 Te pregunto porque ayudamos a clínicas a reducir eso en un 40%.
+Mira cómo lo resolvemos aquí: https://claveai-demo.ckoomq.easypanel.host/dental/
+
 Si te interesa, te mando un PDF gratis con 3 técnicas que usan otras clínicas.""",
         "followup": """Hola! Pasando a saludar 👋
 
 Te escribí hace poco sobre {nombre}.
 Por cierto, te comparto un tip: los recordatorios 24 hrs antes + 2 hrs antes reducen cancelaciones un 40%.
+
+Puedes ver nuestra demo en acción aquí: https://claveai-demo.ckoomq.easypanel.host/dental/
 
 ¿Te gustaría que te cuente cómo lo automatizamos? Sin compromiso""",
         "leadmagnet": "PDF: 3 técnicas para reducir cancelaciones en clínicas dentales"
@@ -93,11 +97,15 @@ Por cierto, te comparto un tip: los recordatorios 24 hrs antes + 2 hrs antes red
 Tengo curiosidad: ¿les pasa que los dueños olvidan las vacunas de sus mascotas? 🐕
 
 Pregunto porque automatizamos recordatorios por WhatsApp para veterinarias.
+Aquí puedes ver una demo de cómo funciona: https://claveai-demo.ckoomq.easypanel.host/veterinaria/
+
 Si quieres te mando una plantilla GRATIS de recordatorio de vacunas que puedes usar ya.""",
         "followup": """Hola de nuevo! 
 
 Te envío la plantilla de recordatorios que te mencioné para {nombre}.
 Es gratis, úsala como quieras 👍
+
+También te dejo esta demo en vivo de un sistema veterinario inteligente: https://claveai-demo.ckoomq.easypanel.host/veterinaria/
 
 ¿Te gustaría ver cómo automatizar estos envíos? Te lo muestro en 5 min""",
         "leadmagnet": "Plantilla de recordatorios de vacunas por WhatsApp"
@@ -110,11 +118,13 @@ Es gratis, úsala como quieras 👍
 Pregunta rápida: ¿tus clientas pueden agendar cita desde su WhatsApp o tienen que llamar? 💆
 
 Te lo pregunto porque muchos spas pierden citas porque la gente no quiere llamar.
+Checa esta demo de agenda automática: https://claveai-demo.ckoomq.easypanel.host/spa/
+
 Si te sirve, te paso gratis una guía de cómo otros spas manejan reservas por WhatsApp.""",
         "followup": """Hola! Pasando a saludar 👋
 
 ¿Viste la guía que te mandé sobre reservas para {nombre}?
-Varios spas la están usando y les funciona muy bien.
+Te comparto esta demo donde puedes ver cómo funcionaría en tu negocio: https://claveai-demo.ckoomq.easypanel.host/spa/
 
 Si quieres te cuento cómo automatizarlo en 5 min""",
         "leadmagnet": "Guía: Cómo manejar reservas de spa por WhatsApp"
@@ -127,11 +137,13 @@ Si quieres te cuento cómo automatizarlo en 5 min""",
 Pregunta rápida: ¿qué hacen cuando alguien pregunta precios pero no se inscribe? 🏋️
 
 Muchos gyms pierden 50% de prospectos porque no les dan seguimiento.
+Te comparto una demo de cómo automatizamos esto: https://claveai-demo.ckoomq.easypanel.host/gimnasio/
+
 Te puedo pasar gratis un guión de seguimiento que funciona muy bien.""",
         "followup": """Hola! Pasando a darte seguimiento 👋
 
 ¿Recibiste el guión de seguimiento para {nombre}?
-Varios gimnasios lo usan y les ayuda a convertir más prospectos.
+Aquí puedes ver el dashboard inteligente que usamos para gimnasios: https://claveai-demo.ckoomq.easypanel.host/gimnasio/
 
 ¿Te gustaría automatizar este proceso? Te lo cuento en 5 min""",
         "leadmagnet": "Guión de seguimiento para prospectos de gimnasio"
@@ -144,11 +156,13 @@ Varios gimnasios lo usan y les ayuda a convertir más prospectos.
 Curiosidad: ¿cómo le hacen cuando alguien pregunta por clases pero no se decide? 📚
 
 Muchas escuelas pierden alumnos porque no les dan seguimiento.
+Mira este test de nivel inteligente que armamos: https://claveai-demo.ckoomq.easypanel.host/idiomas/
+
 Te puedo pasar gratis un funnel de captación que usan otras escuelas.""",
         "followup": """Hola! Saludos desde CLAVE.AI 👋
 
 ¿Viste el funnel que te compartí para {nombre}?
-Varias escuelas lo usan para convertir más prospectos.
+Te dejo por aquí la demo del test de nivel con IA: https://claveai-demo.ckoomq.easypanel.host/idiomas/
 
 Si quieres te cuento cómo automatizarlo en 5 min""",
         "leadmagnet": "Funnel de captación de alumnos para escuelas de idiomas"
@@ -161,11 +175,13 @@ Si quieres te cuento cómo automatizarlo en 5 min""",
 Pregunta directa: ¿les pasa que los pacientes no llegan a su cita? 🏥
 
 Es súper común. Los que mandan recordatorio automático reducen faltas en 35%.
+Aquí tienes una demo de cómo se ve un sistema así: https://claveai-demo.ckoomq.easypanel.host/consultorio/
+
 Te puedo pasar gratis una guía de recordatorios que usan otros consultorios.""",
         "followup": """Hola! Pasando a saludar 👋
 
 ¿Revisaste la guía de recordatorios que te mandé para {nombre}?
-Es de las cosas que más impacto tienen en la agenda.
+Checa cómo funciona el asistente de agenda en vivo: https://claveai-demo.ckoomq.easypanel.host/consultorio/
 
 ¿Te gustaría ver cómo automatizarlo? Te lo muestro en 5 min""",
         "leadmagnet": "Guía de recordatorios automáticos para consultorios"
@@ -178,11 +194,13 @@ Es de las cosas que más impacto tienen en la agenda.
 Pregunta: ¿cómo le hacen para que los clientes regresen a su próximo servicio? 🔧
 
 Muchos talleres pierden clientes porque no les recuerdan cuándo toca cambio de aceite.
+Mira esta demo de cotizador y recordatorios: https://claveai-demo.ckoomq.easypanel.host/taller/
+
 Te puedo pasar gratis una plantilla de recordatorios que usan otros talleres.""",
         "followup": """Hola de nuevo! 👋
 
 ¿Usaste la plantilla que te mandé para {nombre}?
-Varios talleres la usan y les ayuda a tener clientes de vuelta.
+Te comparto la demo de soluciones para talleres mecánicos: https://claveai-demo.ckoomq.easypanel.host/taller/
 
 ¿Te gustaría automatizar esto? Te lo cuento en 5 min""",
         "leadmagnet": "Plantilla de recordatorios de servicio para talleres"
@@ -195,11 +213,13 @@ Varios talleres la usan y les ayuda a tener clientes de vuelta.
 Pregunta rápida: ¿tienen sistema de reservas o la gente llama directamente? 🍽️
 
 Muchos restaurantes pierden mesas porque la gente no quiere llamar.
+Checa nuestra demo de mapa de mesas inteligente: https://claveai-demo.ckoomq.easypanel.host/restaurante/
+
 Te paso gratis una guía de cómo otros restaurantes manejan reservas por WhatsApp.""",
         "followup": """Hola! Saludos 👋
 
 ¿Viste la guía de reservas para {nombre}?
-Varios restaurantes la usan y les funciona bien.
+Te dejo aquí el link de la demo para que veas cómo funciona: https://claveai-demo.ckoomq.easypanel.host/restaurante/
 
 ¿Te cuento cómo automatizarlo? Son 5 min""",
         "leadmagnet": "Guía de reservas por WhatsApp para restaurantes"
@@ -477,9 +497,7 @@ class LeadTracker:
 
 class AutomatedScraper:
     def __init__(self, nicho=""):
-        # Clean webhook URL from any whitespace/newlines
-        raw_url = os.getenv("N8N_WEBHOOK_URL", "")
-        self.n8n_webhook_url = raw_url.strip().replace("\n", "").replace("\r", "") if raw_url else None
+        # Config básica
         self.max_leads = int(os.getenv("MAX_LEADS", "10"))
         self.delay_min = int(os.getenv("DELAY_MIN_MS", "2000"))
         self.delay_max = int(os.getenv("DELAY_MAX_MS", "5000"))
@@ -489,10 +507,10 @@ class AutomatedScraper:
         # Initialize lead tracker to avoid contacting duplicates
         self.tracker = LeadTracker()
         
-        # Evolution API config para verificar WhatsApp
+        # Evolution API config para envío directo de WhatsApp
         self.evolution_url = os.getenv("EVOLUTION_API_URL", "https://evolutionapi-evolution-api.ckoomq.easypanel.host")
         self.evolution_key = os.getenv("EVOLUTION_API_KEY", "")
-        self.evolution_instance = os.getenv("EVOLUTION_INSTANCE", "claveai")
+        self.evolution_instance = os.getenv("EVOLUTION_INSTANCE_NAME", "claveai")
 
         # Supabase Config (Hardcoded for reliability based on auditing)
         self.supabase_url = "https://kbdmbejefpldfjybusbd.supabase.co"
@@ -590,10 +608,41 @@ class AutomatedScraper:
             "google_maps_url": lead.get("google_maps_url", "").strip()
         }
         
-    async def send_all_to_n8n(self, leads_list):
-        """Send ALL leads to n8n webhook in a single call, filtering duplicates"""
-        if not self.n8n_webhook_url:
-            print(f"[WARN] No N8N_WEBHOOK_URL configured")
+    async def send_whatsapp_message(self, phone: str, message: str) -> bool:
+        """Envía un mensaje de WhatsApp usando Evolution API directamente"""
+        if not self.evolution_key:
+            print(f"[ERROR] No EVOLUTION_API_KEY configured")
+            return False
+        
+        try:
+            url = f"{self.evolution_url}/message/sendText/{self.evolution_instance}"
+            headers = {
+                "apikey": self.evolution_key,
+                "Content-Type": "application/json"
+            }
+            # Formato correcto para Evolution API v2
+            payload = {
+                "number": phone,
+                "text": message
+            }
+            
+            async with httpx.AsyncClient() as client:
+                response = await client.post(url, json=payload, headers=headers, timeout=30.0)
+                
+                if response.status_code in [200, 201]:
+                    print(f"[EVOLUTION] ✅ Mensaje enviado a {phone}")
+                    return True
+                else:
+                    print(f"[EVOLUTION] ❌ Error enviando a {phone}: {response.status_code} - {response.text[:200]}")
+                    return False
+        except Exception as e:
+            print(f"[EVOLUTION] Exception enviando a {phone}: {e}")
+            return False
+    
+    async def send_all_via_evolution(self, leads_list):
+        """Envía mensajes de WhatsApp directamente via Evolution API (sin n8n)"""
+        if not self.evolution_key:
+            print(f"[ERROR] No EVOLUTION_API_KEY configured - no se pueden enviar mensajes")
             return False
         
         # Filter leads with phone and clean them
@@ -622,45 +671,48 @@ class AutomatedScraper:
             return True  # Not an error, just no new leads
         
         print(f"[TRACKER] ✅ {len(new_leads)} NEW leads to contact (out of {len(cleaned_leads)} total)")
+        print(f"[EVOLUTION] 📤 Enviando {len(new_leads)} mensajes directamente via Evolution API...")
         
+        sent_count = 0
         try:
-            async with httpx.AsyncClient() as client:
-                payload = {
-                    "leads": new_leads,  # Only send NEW leads
-                    "total_count": len(new_leads),
-                    "source": "automated_scraper",
-                    "timestamp": datetime.now().isoformat()
-                }
+            for lead in new_leads:
+                phone = lead.get("phone", "")
+                message = lead.get("message", "")
                 
-                # Retry logic with exponential backoff
-                max_retries = 3
-                for attempt in range(max_retries):
-                    try:
-                        response = await client.post(self.n8n_webhook_url, json=payload, timeout=60.0)
-                        print(f"[N8N] Sent {len(new_leads)} NEW leads in ONE call | Status: {response.status_code}")
-                        
-                        # Si el envío fue exitoso, registrar los leads como contactados
-                        if response.status_code == 200:
-                            self.tracker.add_contacted_leads(new_leads)
-                            stats = self.tracker.get_stats()
-                            print(f"[TRACKER] 📊 Total histórico de leads contactados: {stats['total_contacted']}")
-                            
-                            # Registrar en Supabase para tracking de clave-chat
-                            print(f"[SUPABASE] Syncing {len(new_leads)} leads to Dashboard...")
-                            for lead in new_leads:
-                                self.register_lead_in_supabase(lead)
-                        
-                        return response.status_code == 200
-                    except httpx.TimeoutException as timeout_err:
-                        if attempt < max_retries - 1:
-                            wait_time = (attempt + 1) * 10  # 10s, 20s, 30s
-                            print(f"[RETRY] Timeout on attempt {attempt + 1}/{max_retries}, waiting {wait_time}s...")
-                            await asyncio.sleep(wait_time)
-                        else:
-                            raise timeout_err
+                if not phone or not message:
+                    print(f"[SKIP] Lead sin teléfono o mensaje")
+                    continue
+                
+                success = await self.send_whatsapp_message(phone, message)
+                if success:
+                    sent_count += 1
+                    # Registrar en Supabase
+                    self.register_lead_in_supabase(lead)
+                
+                # Delay entre mensajes para evitar rate limiting
+                await asyncio.sleep(random.randint(2000, 4000) / 1000)
+            
+            # Registrar todos los leads como contactados (aunque algunos fallen)
+            self.tracker.add_contacted_leads(new_leads)
+            stats = self.tracker.get_stats()
+            print(f"[TRACKER] 📊 Total histórico de leads contactados: {stats['total_contacted']}")
+            print(f"[EVOLUTION] ✅ Enviados {sent_count}/{len(new_leads)} mensajes exitosamente")
+            
+            return sent_count > 0
         except Exception as e:
-            print(f"[ERROR] Failed to send to n8n: {type(e).__name__}: {e}")
+            print(f"[ERROR] Failed to send via Evolution: {type(e).__name__}: {e}")
             return False
+    
+    async def send_test_message(self, phone: str = "523318213624"):
+        """Función de prueba para enviar un mensaje de test"""
+        test_message = "🔧 Mensaje de prueba desde el scraper CLAVE.AI - Evolution API directa"
+        print(f"[TEST] Enviando mensaje de prueba a {phone}...")
+        success = await self.send_whatsapp_message(phone, test_message)
+        if success:
+            print(f"[TEST] ✅ Mensaje de prueba enviado exitosamente!")
+        else:
+            print(f"[TEST] ❌ Error enviando mensaje de prueba")
+        return success
 
     async def get_text(self, page, selector) -> str:
         try:
@@ -844,13 +896,13 @@ class AutomatedScraper:
                     except:
                         pass
 
-                # Send ALL leads to n8n in ONE call at the end
+                # Send ALL leads via Evolution API directamente
                 if self.leads:
-                    success = await self.send_all_to_n8n(self.leads)
+                    success = await self.send_all_via_evolution(self.leads)
                     sent_count = len([l for l in self.leads if l.get("phone")]) if success else 0
 
                 print(f"\n{'='*60}")
-                print(f"[DONE] Extracted: {leads_count} leads | Sent to n8n: {sent_count} (in 1 call)")
+                print(f"[DONE] Extracted: {leads_count} leads | Sent via Evolution: {sent_count}")
                 print(f"{'='*60}\n")
                 
             except Exception as e:

@@ -34,7 +34,9 @@ Cualquier cosa me dices 👍""",
 
 {leadmagnet}
 
-Es tuyo, sin compromiso. Si después quieres platicar sobre cómo automatizarlo, aquí andamos.
+Es tuyo, sin compromiso. También puedes ver nuestras soluciones en vivo aquí: https://claveai-demo.ckoomq.easypanel.host/
+
+Si después quieres platicar sobre cómo automatizarlo, aquí andamos.
 
 Saludos!""",
     
